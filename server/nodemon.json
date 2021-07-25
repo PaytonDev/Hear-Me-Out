@@ -1,7 +1,0 @@
-{
-    "env": {
-        "MONGO_USER": "BPayton3",
-        "MONGO_PASSWORD": "3307CoxAutoInc",
-        "MONGO_DB": "Here-Me-Out-Prod"
-    }
-}
