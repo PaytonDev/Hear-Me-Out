@@ -1,11 +1,15 @@
 import { IUser } from "../types/types"
-import { model, Schema } from "mongoose"
+import mongoose, { model,  Schema } from "mongoose"
 import bcrypt from 'bcrypt'
 
 let SALT_WORK_FACTOR: number = 10;
 
 const userSchema = new Schema<IUser>(
-    {
+    {   
+        user_id: {
+            type: mongoose.Types.ObjectId,
+            required: true
+        },
          first_name: {
              type: String,
              required: true,
