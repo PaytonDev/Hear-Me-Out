@@ -1,0 +1,19 @@
+/*
+dark-grey - #212529
+orange - #FCA511 
+
+*/
+
+.App {
+  text-align: center;
+  background-color: #212529;
+  min-height: 100vh;
+  width: 100%;
+  color: #FCA511;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+

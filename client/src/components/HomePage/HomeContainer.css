@@ -1,0 +1,11 @@
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.home-hero {
+    font-size: 5em;
+}

@@ -1,0 +1,12 @@
+.searchbar {
+    width: 50%;
+    margin: 2em;
+}
+
+.MuiFormControl-root {
+    margin: 2em;
+}
+
+input:focus {
+    border-color: #FCA511;
+}

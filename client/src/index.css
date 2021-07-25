@@ -1,0 +1,9 @@
+body, html {
+  min-height: 100vh;
+  background-color: #212529;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
