@@ -1,4 +1,5 @@
-import { Box, Link } from "@material-ui/core";
+import { Box, Link, Grid } from "@material-ui/core";
+import { Person, Album, MusicNote } from "@material-ui/icons";
 import { useState } from "react";
 import { getSong } from "../../API"
 import AlbumSection from "./AlbumSection/AlbumSection";
@@ -45,36 +46,62 @@ export default function SearchResults(props: SearchResultsProps) {
         setArtistVisible(true)
     }
 
-    console.log(props.currentSong?.song.paused)
-    console.log(props.currentSong?.isPlaying)
 
 
     const listArtists = props.artists.map((artist: any, idx: number) => 
     //  TODO: make onClick one function!!!!
-        <li key={idx} ><Link onClick={() => {makeArtistVisible(); setCurrentArtist(artist)}}>{artist.name}</Link></li>
+        <li className="searchResults-link" key={idx} >
+            <Box className="searchResults-icon">
+                <Person fontSize="small" />
+            </Box>
+            <Link onClick={() => {makeArtistVisible(); setCurrentArtist(artist)}}>{artist.name}</Link>
+        </li>
     )
     const listAlbums = props.albums.map((album: any, idx: number) => 
-        <li key={idx}><Link onClick={() => {makeAlbumVisible(); setCurrentAlbum(album)}}>{album.name}</Link></li>
+        <li className="searchResults-link" key={idx}>
+            <Box className="searchResults-icon">
+                <Album fontSize="small" />
+            </Box>
+            <Link onClick={() => {makeAlbumVisible(); setCurrentAlbum(album)}}>{album.name}</Link>
+        </li>
     )
     const listSongs = props.songs.map((song, idx) => 
-        <li key={idx}><Link onClick={() => playSong(song.id)}>{song.name}</Link></li>
+        <li className="searchResults-link" key={idx}>
+            <Box className="searchResults-icon">
+                <MusicNote fontSize="small" />
+            </Box>
+            <Link onClick={() => playSong(song.id)}>{song.name}</Link>
+        </li>
     )
 
 
     return (
-        <Box>
-            <Box>
-                <Box style={ props.query ? {display : "block"} : {display : "none"}}>
-                    <ul>{listArtists}</ul>
-                    <ul>{listAlbums}</ul>
-                    <ul>{listSongs}</ul>
-                </Box>
-                <Box style={albumVisible ? {display : "block"} : {display : "none"}}>
-                    <AlbumSection currentAlbum={currentAlbum}/>
-                </Box>
-                <Box style={artistVisible ? {display : "block"} : {display : "none"}}>
-                    <ArtistSection currentArtist={currentArtist}/>
-                </Box>
+        <Box className="searchResults-box ">
+            <Grid container className="searchResults-grid-container" style={ props.query ? {display : "block"} : {display : "none"}}>
+                <Grid item xs={12}>
+                    <Box className="searchResults-links-box">
+                        <small>Artist</small>
+                        <ul>{listArtists}</ul>
+                    </Box>
+                </Grid>
+                <Grid  item >
+                    <Box className="searchResults-links-box">
+                        <small>Albums</small>
+                        <ul>{listAlbums}</ul>
+                    </Box>
+                </Grid>
+                <Grid  item >
+                    <Box className="searchResults-links-box">
+                        <small>Songs</small>
+                        <ul>{listSongs}</ul>
+                    </Box>
+                </Grid>
+            </Grid>
+            <Box style={albumVisible ? {display : "block"} : {display : "none"}}>
+                <AlbumSection currentAlbum={currentAlbum}/>
+            </Box>
+            <Box style={artistVisible ? {display : "block"} : {display : "none"}}>
+                <ArtistSection currentArtist={currentArtist}/>
             </Box>
         </Box>
     )

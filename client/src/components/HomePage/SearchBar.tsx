@@ -8,7 +8,6 @@ import "./SearchBar.css"
 import { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/styles";
 import { getSearchResults } from "../../API";
-import { Box } from "@material-ui/core";
 
 
 // Move to styles file!
@@ -62,7 +61,6 @@ export default function SearchBar(props: SearchBarProps) {
                     }
                 />
             </FormControl>
-            <Box>
                 <SearchResults
                     artists={artists}
                     albums={albums}
@@ -71,7 +69,6 @@ export default function SearchBar(props: SearchBarProps) {
                     query={query}
                     handlePlaySong={props.handlePlaySong}
                 />
-            </Box>
         </>
     )
 }
