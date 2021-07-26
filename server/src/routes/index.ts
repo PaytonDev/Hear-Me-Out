@@ -6,7 +6,9 @@ const router: Router = Router()
 
 
 // TODO: Update error handling!!!
-
+router.get("/server", function(req, res) {
+    res.send('this is your server')
+})
 
 router.get("/user/:id", function(req, res) {
     User.findById(req.params.id, function(err: any, result: any) {

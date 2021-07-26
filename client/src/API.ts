@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 const spotifyUrl: string = "https://api.spotify.com/v1/" 
-const ACCESS_TOKEN: string = 'BQBaHW615egJXk1n1bVlE-ik6v_MYIwGTUvbpPONMa9tsOIBF53f25i2eZeB38XyZ37ZWAIdyr6IEHTJVwY';
+const ACCESS_TOKEN: string = 'BQDzmEnPy3Z5jsJC7VqzlFkS8qvf1j588svqztlocdJaJNFGLrcyi0UcXF40DvZKgmoHSSleZMv9im82LUE';
 
 // Functions for Spotify API Calls
 
@@ -46,7 +46,18 @@ export const getAlbumSongs = async (id: string): Promise<AxiosResponse> => {
 export const getArtist = async (id: string): Promise<AxiosResponse> => {
     try {
         const results: AxiosResponse = await axios.get(
-            spotifyUrl + `artist/${id}`
+            spotifyUrl + `artists/${id}`
+        , {headers: {Authorization: `Bearer ${ACCESS_TOKEN}`}})
+        return results
+    } catch (err) {
+        throw new Error(err)
+    }
+}
+
+export const getArtistAlbums = async (id: string): Promise<AxiosResponse> => {
+    try {
+        const results: AxiosResponse = await axios.get(
+            spotifyUrl + `artists/${id}/albums`
         , {headers: {Authorization: `Bearer ${ACCESS_TOKEN}`}})
         return results
     } catch (err) {

@@ -8,7 +8,10 @@ import "./SearchBar.css"
 import { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/styles";
 import { getSearchResults } from "../../API";
+import { Box } from "@material-ui/core";
 
+
+// Move to styles file!
 const StyledOutlinedInput = withStyles({
     root: {
         borderColor: "#FCA511",
@@ -18,8 +21,12 @@ const StyledOutlinedInput = withStyles({
 })(OutlinedInput)
 
 
+export type SearchBarProps = {
+    currentSong: Song;
+}
 
-export default function SearchBar() {
+
+export default function SearchBar(props: SearchBarProps) {
     const [query, setQuery] = useState('')
     const [albums, setAlbums] = useState([])
     const [artists, setArtists] = useState([])
@@ -29,7 +36,6 @@ export default function SearchBar() {
     useEffect(() => {
         handleChange(query)
     }, [query])
-
 
     const handleChange = async (query: string) => {
         if (query === '') {
@@ -41,7 +47,6 @@ export default function SearchBar() {
         setSongs(res.data.tracks.items)
     }
     
-console.log(query)
     return (
         <>
             <FormControl variant="outlined" className="searchbar">
@@ -57,7 +62,9 @@ console.log(query)
                     }
                 />
             </FormControl>
-            <SearchResults artists={artists} albums={albums} songs={songs}/>
+            <Box>
+                <SearchResults artists={artists} albums={albums} songs={songs} currentSong={props.currentSong} query={query}/>
+            </Box>
         </>
     )
 }
