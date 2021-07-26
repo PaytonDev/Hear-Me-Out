@@ -30,10 +30,10 @@ const ArtistSection = (props: ArtistSectionProps) => {
                 <ul>
                 {props.currentArtist ? 
                 artistAlbums.map((album: any, idx: number) => (
-                    <>
-                        <li key={`${idx + 2}-album`} >{album.name}</li>
+                    <li key={idx}>
+                        <div key={`${idx}-album`} >{album.name}</div>
                         <img key={`${idx}-image`} src={album.images[1].url} alt={`${album.name} avatar`}/>
-                    </>
+                    </li>
                 )): "Album Songs"}
                 </ul>
             </Box>

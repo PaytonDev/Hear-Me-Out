@@ -22,9 +22,9 @@ const StyledOutlinedInput = withStyles({
 
 
 export type SearchBarProps = {
-    currentSong: Song;
+    currentSong: HTMLAudioElement | undefined;
+    handlePlaySong: any
 }
-
 
 export default function SearchBar(props: SearchBarProps) {
     const [query, setQuery] = useState('')
@@ -63,7 +63,14 @@ export default function SearchBar(props: SearchBarProps) {
                 />
             </FormControl>
             <Box>
-                <SearchResults artists={artists} albums={albums} songs={songs} currentSong={props.currentSong} query={query}/>
+                <SearchResults
+                    artists={artists}
+                    albums={albums}
+                    songs={songs}
+                    currentSong={props.currentSong}
+                    query={query}
+                    handlePlaySong={props.handlePlaySong}
+                />
             </Box>
         </>
     )

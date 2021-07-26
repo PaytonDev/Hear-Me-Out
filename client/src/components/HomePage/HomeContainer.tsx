@@ -1,25 +1,37 @@
-import Container  from "@material-ui/core/Container"
+import { Container } from "@material-ui/core/"
 import { useState } from "react"
-
+import PlayerWidget from "../PlayerWidget/PlayerWidget";
 import "./HomeContainer.css"
 import SearchBar from "./SearchBar"
 
 
-export type HomeContainerProps = {
-
-}
 
 
-const HomeContainer = (props: HomeContainerProps) => {
-    const [currentSong] = useState<any>()
 
+const HomeContainer = () => {
+    const [currentSong, setCurrentSong] = useState<HTMLAudioElement>()
+
+    const handlePlaySong = (song: any) => {
+        if (song === undefined) return
+        setCurrentSong(song)
+        song.song.play()
+        song.isPlaying = true
+    }
+
+    const handlePauseSong = (song: any) => {
+        song.song.pause()
+        song.isPlaying = false
+    }
+
+console.log(currentSong)
 
     return (
         <div className="home-container">
             <Container >
                 <header className="home-hero">Hear Me Out</header>
-                <SearchBar currentSong={currentSong}/>
+                <SearchBar currentSong={currentSong} handlePlaySong={handlePlaySong}/>
             </Container>
+            <PlayerWidget currentSong={currentSong} handlePlaySong={handlePlaySong} handlePauseSong={handlePauseSong}/>
         </div>
     )
 }

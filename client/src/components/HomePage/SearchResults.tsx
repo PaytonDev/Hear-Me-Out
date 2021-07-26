@@ -3,6 +3,7 @@ import { useState } from "react";
 import { getSong } from "../../API"
 import AlbumSection from "./AlbumSection/AlbumSection";
 import ArtistSection from "./ArtistSection/ArtistSection";
+import "./SearchResults.css"
 
 
 
@@ -11,11 +12,11 @@ type SearchResultsProps = {
     albums: Album []
     songs: Song []
     currentSong: any
+    handlePlaySong: any
     query: string
 }
 
 export default function SearchResults(props: SearchResultsProps) {
-    const [currentSong, setCurrentSong] = useState(props.currentSong)
     const [currentAlbum, setCurrentAlbum] = useState()
     const [currentArtist, setCurrentArtist] = useState()
 
@@ -24,12 +25,14 @@ export default function SearchResults(props: SearchResultsProps) {
 
     const playSong = async (song: string) => {
         let selectedSong = await getSong(song)
-        let songToPlay = new Audio(selectedSong.data.preview_url)
-        if (currentSong) {
-            currentSong.pause()
+        let songToPlay = {
+            song: new Audio(selectedSong.data.preview_url),
+            isPlaying : false
         }
-        setCurrentSong(songToPlay)
-        songToPlay.play()
+        if (props.currentSong) {
+            props.currentSong.song.pause()
+        }
+        props.handlePlaySong(songToPlay)
     }
 
     const makeAlbumVisible = () => {
@@ -42,7 +45,8 @@ export default function SearchResults(props: SearchResultsProps) {
         setArtistVisible(true)
     }
 
-
+    console.log(props.currentSong?.song.paused)
+    console.log(props.currentSong?.isPlaying)
 
 
     const listArtists = props.artists.map((artist: any, idx: number) => 
@@ -59,16 +63,18 @@ export default function SearchResults(props: SearchResultsProps) {
 
     return (
         <Box>
-            <Box style={ props.query ? {display : "block"} : {display : "none"}}>
-                <ul>{listArtists}</ul>
-                <ul>{listAlbums}</ul>
-                <ul>{listSongs}</ul>
-            </Box>
-            <Box style={albumVisible ? {display : "block"} : {display : "none"}}>
-                <AlbumSection currentAlbum={currentAlbum}/>
-            </Box>
-            <Box style={artistVisible ? {display : "block"} : {display : "none"}}>
-                <ArtistSection currentArtist={currentArtist}/>
+            <Box>
+                <Box style={ props.query ? {display : "block"} : {display : "none"}}>
+                    <ul>{listArtists}</ul>
+                    <ul>{listAlbums}</ul>
+                    <ul>{listSongs}</ul>
+                </Box>
+                <Box style={albumVisible ? {display : "block"} : {display : "none"}}>
+                    <AlbumSection currentAlbum={currentAlbum}/>
+                </Box>
+                <Box style={artistVisible ? {display : "block"} : {display : "none"}}>
+                    <ArtistSection currentArtist={currentArtist}/>
+                </Box>
             </Box>
         </Box>
     )

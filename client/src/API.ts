@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 const spotifyUrl: string = "https://api.spotify.com/v1/" 
-const ACCESS_TOKEN: string = 'BQDzmEnPy3Z5jsJC7VqzlFkS8qvf1j588svqztlocdJaJNFGLrcyi0UcXF40DvZKgmoHSSleZMv9im82LUE';
+const ACCESS_TOKEN: string = 'BQB-yEWAukEaE-ZV_5GQ6e-6Hp6eQiQJEPRc73NTcWG1P6eydmLoUEcdKJS8k6skLOoeB_coCuYoVLUlzpg';
 
 // Functions for Spotify API Calls
 
