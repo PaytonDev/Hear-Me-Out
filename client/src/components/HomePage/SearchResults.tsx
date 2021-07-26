@@ -76,32 +76,34 @@ export default function SearchResults(props: SearchResultsProps) {
 
 
     return (
-        <Box className="searchResults-box ">
-            <Grid container className="searchResults-grid-container" style={ props.query ? {display : "block"} : {display : "none"}}>
-                <Grid item xs={12}>
-                    <Box className="searchResults-links-box">
-                        <small>Artist</small>
-                        <ul>{listArtists}</ul>
-                    </Box>
+        <Box>
+            <Box className="searchResults-box ">
+                <Grid container className="searchResults-grid-container" style={ props.query ? {display : "block"} : {display : "none"}}>
+                    <Grid item xs={12}>
+                        <Box className="searchResults-links-box">
+                            <small>Artist</small>
+                            <ul>{listArtists}</ul>
+                        </Box>
+                    </Grid>
+                    <Grid  item >
+                        <Box className="searchResults-links-box">
+                            <small>Albums</small>
+                            <ul>{listAlbums}</ul>
+                        </Box>
+                    </Grid>
+                    <Grid  item >
+                        <Box className="searchResults-links-box">
+                            <small>Songs</small>
+                            <ul>{listSongs}</ul>
+                        </Box>
+                    </Grid>
                 </Grid>
-                <Grid  item >
-                    <Box className="searchResults-links-box">
-                        <small>Albums</small>
-                        <ul>{listAlbums}</ul>
-                    </Box>
-                </Grid>
-                <Grid  item >
-                    <Box className="searchResults-links-box">
-                        <small>Songs</small>
-                        <ul>{listSongs}</ul>
-                    </Box>
-                </Grid>
-            </Grid>
+            </Box>
             <Box style={albumVisible ? {display : "block"} : {display : "none"}}>
                 <AlbumSection currentAlbum={currentAlbum}/>
             </Box>
             <Box style={artistVisible ? {display : "block"} : {display : "none"}}>
-                <ArtistSection currentArtist={currentArtist}/>
+                <ArtistSection currentArtist={currentArtist} handleShowAlbum={makeAlbumVisible} handleCurrentAlbum={setCurrentAlbum}/>
             </Box>
         </Box>
     )
