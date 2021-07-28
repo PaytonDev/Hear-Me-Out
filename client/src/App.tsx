@@ -8,18 +8,22 @@ function App() {
   
   const code = new URLSearchParams(window.location.search).get('code')
 
-  if (code) {
-    window.localStorage.setItem('yourCode', `${code}`)
+  const storeCode = () => {
+      if (code) {
+      window.localStorage.setItem('yourCode', `${code}`)
+      let yourCode = localStorage.getItem('yourCode')
+      return yourCode
+    }
+    return
   }
   
-  let yourCode = localStorage.getItem('yourCode') || null
 
   return (
     <Router>
       <div className="App">
         <Switch>
           <Route exact path="/">
-            {yourCode ? <HomeContainer code={code}/> : <LoginPage />}
+            {storeCode() ? <HomeContainer code={code}/> : <LoginPage />}
           </Route>
           <Route path='/home'>
           <HomeContainer code={code}/> 

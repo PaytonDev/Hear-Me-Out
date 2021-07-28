@@ -79,20 +79,20 @@ export default function SearchResults(props: SearchResultsProps) {
     return (
         <Box>
             <Box className="searchResults-box">
-                <Grid container className="searchResults-grid-container" style={ props.query ? {display : "block"} : {display : "none"}}>
-                    <Grid item xs={12}>
+                <Grid container justifyContent="space-between" className="searchResults-grid-container" style={ props.query ? {display : "flex"} : {display : "none"}}>
+                    <Grid item xs={4}>
                         <Box className="searchResults-links-box">
                             <small>Artist</small>
                             <ul>{listArtists}</ul>
                         </Box>
                     </Grid>
-                    <Grid  item >
+                    <Grid  item xs={4} >
                         <Box className="searchResults-links-box">
                             <small>Albums</small>
                             <ul>{listAlbums}</ul>
                         </Box>
                     </Grid>
-                    <Grid  item >
+                    <Grid  item xs={4}>
                         <Box className="searchResults-links-box">
                             <small>Songs</small>
                             <ul>{listSongs}</ul>
@@ -101,10 +101,10 @@ export default function SearchResults(props: SearchResultsProps) {
                 </Grid>
             </Box>
             <Box style={albumVisible ? {display : "block"} : {display : "none"}}>
-                <AlbumSection currentAlbum={currentAlbum} token={props.token}/>
+                <AlbumSection currentAlbum={currentAlbum} currentArtist={currentArtist} token={props.token} handleShowArtist={makeArtistVisible} handleCurrentArtist={setCurrentArtist} playSong={playSong}/>
             </Box>
             <Box style={artistVisible ? {display : "block"} : {display : "none"}}>
-                <ArtistSection currentArtist={currentArtist} handleShowAlbum={makeAlbumVisible} handleCurrentAlbum={setCurrentAlbum} token={props.token}/>
+                <ArtistSection currentArtist={currentArtist} currentAlbum={currentAlbum} handleShowAlbum={makeAlbumVisible} handleCurrentAlbum={setCurrentAlbum} token={props.token} playSong={playSong}/>
             </Box>
         </Box>
     )

@@ -10,7 +10,7 @@ orange - #FCA511
   min-height: 100vh;
   max-width: 100%;
   margin: 0;
-  color: #FCA511;
+  color: rgb(252, 165, 17);
   font-family: 'Roboto', sans-serif;
   display: flex;
   align-items: center;

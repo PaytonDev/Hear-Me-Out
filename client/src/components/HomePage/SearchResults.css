@@ -1,18 +1,18 @@
 .searchResults-box {
-    max-width: 38vw;
+    max-width: 50vw;
     margin: 0 auto;
 }
 
 
 .searchResults-grid-container {
-    max-width: 100%;
+    min-width: 100%;
     display: flex;
     text-align: left;
-    align-items: center;
-    padding: 15px;
+     align-items: center; 
+     padding: 15px;
     background-color: #1d1f22;
     border-radius: 10px;
-}
+} 
 
 ul {
     list-style-type: none;
@@ -22,9 +22,9 @@ ul {
 
 .searchResults-link {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-}
+     flex-direction: row; 
+     align-items: center;
+} 
 
 .searchResults-icon {
     margin-right: 10px
