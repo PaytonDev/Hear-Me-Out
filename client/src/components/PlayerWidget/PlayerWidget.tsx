@@ -7,6 +7,7 @@ type PlayerWidgetProps = {
     currentSong: any
     handlePlaySong: any
     handlePauseSong: any
+    token: string | undefined
 }
 
 

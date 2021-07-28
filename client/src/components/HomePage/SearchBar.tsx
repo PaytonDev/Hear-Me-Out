@@ -23,9 +23,13 @@ const StyledOutlinedInput = withStyles({
 export type SearchBarProps = {
     currentSong: HTMLAudioElement | undefined;
     handlePlaySong: any
+    token: string | undefined
 }
 
 export default function SearchBar(props: SearchBarProps) {
+
+    const token = props.token
+
     const [query, setQuery] = useState('')
     const [albums, setAlbums] = useState([])
     const [artists, setArtists] = useState([])
@@ -33,14 +37,15 @@ export default function SearchBar(props: SearchBarProps) {
 
 
     useEffect(() => {
-        handleChange(query)
-    }, [query])
+        if (!query) return
+        handleChange(query, props.token)
+    }, [query, props.token])
 
-    const handleChange = async (query: string) => {
+    const handleChange = async (query: string, token: string | undefined) => {
         if (query === '') {
             return
         }
-        const res = await getSearchResults(query)
+        const res = await getSearchResults(query, token)
         setAlbums(res.data.albums.items)
         setArtists(res.data.artists.items)
         setSongs(res.data.tracks.items)
@@ -68,6 +73,7 @@ export default function SearchBar(props: SearchBarProps) {
                     currentSong={props.currentSong}
                     query={query}
                     handlePlaySong={props.handlePlaySong}
+                    token={token}
                 />
         </>
     )

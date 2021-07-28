@@ -15,6 +15,7 @@ type SearchResultsProps = {
     currentSong: any
     handlePlaySong: any
     query: string
+    token: string | undefined
 }
 
 export default function SearchResults(props: SearchResultsProps) {
@@ -25,7 +26,7 @@ export default function SearchResults(props: SearchResultsProps) {
     const [artistVisible, setArtistVisible] = useState(false)
 
     const playSong = async (song: string) => {
-        let selectedSong = await getSong(song)
+        let selectedSong = await getSong(song, props.token)
         let songToPlay = {
             song: new Audio(selectedSong.data.preview_url),
             isPlaying : false
@@ -100,10 +101,10 @@ export default function SearchResults(props: SearchResultsProps) {
                 </Grid>
             </Box>
             <Box style={albumVisible ? {display : "block"} : {display : "none"}}>
-                <AlbumSection currentAlbum={currentAlbum}/>
+                <AlbumSection currentAlbum={currentAlbum} token={props.token}/>
             </Box>
             <Box style={artistVisible ? {display : "block"} : {display : "none"}}>
-                <ArtistSection currentArtist={currentArtist} handleShowAlbum={makeAlbumVisible} handleCurrentAlbum={setCurrentAlbum}/>
+                <ArtistSection currentArtist={currentArtist} handleShowAlbum={makeAlbumVisible} handleCurrentAlbum={setCurrentAlbum} token={props.token}/>
             </Box>
         </Box>
     )

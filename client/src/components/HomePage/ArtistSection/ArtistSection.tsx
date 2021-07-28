@@ -7,6 +7,7 @@ type ArtistSectionProps = {
     currentArtist: any
     handleShowAlbum: () => void
     handleCurrentAlbum: React.Dispatch<React.SetStateAction<undefined>>
+    token: string | undefined
 }
 
 const ArtistSection = (props: ArtistSectionProps) => {
@@ -15,18 +16,18 @@ const ArtistSection = (props: ArtistSectionProps) => {
     useEffect(() => {
       async function getCurrentArtistAlbums() {
         if (!props.currentArtist) return
-        let res = await getArtistAlbums(props.currentArtist.id)
+        let res = await getArtistAlbums(props.currentArtist.id, props.token)
         setArtistAlbums(res.data.items)
       }
       getCurrentArtistAlbums()
-    },[props.currentArtist])
+    },[props.currentArtist, props.token])
 
 
     return (
         <Grid container spacing={3}>
             <Grid item xs={6}>
                 <img
-                    src={props.currentArtist ? props.currentArtist.images[2].url : "Artist Image"}
+                    src={props.currentArtist ? props.currentArtist.images[0].url : "Artist Image"}
                     alt={`${props.currentArtist ? props.currentArtist.name : ''} avatar`}
                 />
             </Grid>

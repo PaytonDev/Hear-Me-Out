@@ -5,6 +5,7 @@ import "./AlbumSection.css"
 
 type AlbumSectionProps = {
   currentAlbum: any
+  token: string | undefined
 }
 
 
@@ -14,11 +15,11 @@ type AlbumSectionProps = {
    useEffect(() => {
      async function getCurrentAlbumSongs() {
        if (!props.currentAlbum) return
-       let res = await getAlbumSongs(props.currentAlbum.id)
+       let res = await getAlbumSongs(props.currentAlbum.id, props.token)
        setAlbumSongs(res.data.items)
      }
      getCurrentAlbumSongs()
-   },[props.currentAlbum])
+   },[props.currentAlbum, props.token])
 
 
     return (
