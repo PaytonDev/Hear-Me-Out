@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import useAuth from "../../useAuth";
 import PlayerWidget from "../PlayerWidget/PlayerWidget";
 import "./HomeContainer.css"
-import SearchBar from "./SearchBar"
+import SearchBar from "./SearchBar/SearchBar"
 import SpotifyWebApi from "spotify-web-api-node";
 
 interface HomeContainerProps {
@@ -38,10 +38,21 @@ const HomeContainer = ({ code }: HomeContainerProps ) => {
     return (
         <div className="home-container">
             <Container >
-                <header className="home-hero">Hear Me Out</header>
-                <SearchBar currentSong={currentSong} handlePlaySong={handlePlaySong} token={token}/>
+                <header className="home-hero">
+                    Hear Me Out
+                </header>
+                <SearchBar
+                    currentSong={currentSong}
+                    handlePlaySong={handlePlaySong}
+                    token={token}
+                />
             </Container>
-            <PlayerWidget currentSong={currentSong} handlePlaySong={handlePlaySong} handlePauseSong={handlePauseSong} token={token}/>
+            <PlayerWidget
+                currentSong={currentSong}
+                handlePlaySong={handlePlaySong}
+                handlePauseSong={handlePauseSong} 
+                token={token}
+            />
         </div>
     )
 }
