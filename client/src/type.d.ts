@@ -69,6 +69,7 @@ type Song = {
     track_number: boolean;
     type: string;
     uri: string;
+    isPlaying: boolean;
 }
 
 type Image = {

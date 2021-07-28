@@ -1,0 +1,14 @@
+.widget-container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75px;
+    background-color: #000;
+}
+
+svg {
+    font-size: 36;
+}

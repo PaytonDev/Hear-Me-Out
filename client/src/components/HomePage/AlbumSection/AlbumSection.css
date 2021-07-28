@@ -1,0 +1,14 @@
+.albumSection-grid-container {
+    max-width: 50vw;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.albumSection-img {
+    max-height: 300px;
+}
+
+.albumSection-songlist-grid {
+    margin: 0 auto;
+}
