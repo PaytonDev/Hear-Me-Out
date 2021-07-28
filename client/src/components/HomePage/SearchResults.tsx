@@ -21,9 +21,9 @@ type SearchResultsProps = {
 export default function SearchResults(props: SearchResultsProps) {
     const [currentAlbum, setCurrentAlbum] = useState()
     const [currentArtist, setCurrentArtist] = useState()
-
     const [albumVisible, setAlbumVisible] = useState(false)
     const [artistVisible, setArtistVisible] = useState(false)
+    
 
     const playSong = async (song: string) => {
         let selectedSong = await getSong(song, props.token)
@@ -78,7 +78,7 @@ export default function SearchResults(props: SearchResultsProps) {
 
     return (
         <Box>
-            <Box className="searchResults-box ">
+            <Box className="searchResults-box">
                 <Grid container className="searchResults-grid-container" style={ props.query ? {display : "block"} : {display : "none"}}>
                     <Grid item xs={12}>
                         <Box className="searchResults-links-box">

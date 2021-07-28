@@ -3,7 +3,7 @@ import FormControl from "@material-ui/core/FormControl"
 import TextField from "@material-ui/core/TextField"
 import Search from "@material-ui/icons/Search"
 import SearchResults from "../SearchResults";
-import styles from "./SearchBarStyles";
+import styles from "./styles";
 import { useState, useEffect } from "react";
 import { getSearchResults } from "../../../API";
 
@@ -16,12 +16,14 @@ export type SearchBarProps = {
 }
 
 export default function SearchBar(props: SearchBarProps) {
-    const classes = styles()
     const token = props.token
+    const classes = styles()
+
     const [query, setQuery] = useState('')
     const [albums, setAlbums] = useState([])
     const [artists, setArtists] = useState([])
     const [songs, setSongs] = useState([])
+    const [resultsVisible, setResultsVisible] = useState(false)
 
 
     useEffect(() => {
@@ -40,6 +42,8 @@ export default function SearchBar(props: SearchBarProps) {
         setArtists(res.data.artists.items)
         setSongs(res.data.tracks.items)
     }
+
+    
     
     return (
         <>

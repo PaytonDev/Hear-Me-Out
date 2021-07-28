@@ -17,7 +17,6 @@ const spotifyApi = new SpotifyWebApi({
 const HomeContainer = ({ code }: HomeContainerProps ) => {
     const [currentSong, setCurrentSong] = useState<HTMLAudioElement>()
     let token = useAuth(code)
-
     useEffect(() => {
         if (!token) return;
         spotifyApi.setAccessToken(token)

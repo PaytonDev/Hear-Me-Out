@@ -31,14 +31,14 @@ export const getAlbum = async (id: string, token: string | undefined): Promise<A
 }
 
 
-export const getAlbumSongs = async (id: string, token: string | undefined): Promise<AxiosResponse> => {
+export const getAlbumSongs = async (id: string, token: string | undefined) => {
     try {
-        const results: AxiosResponse = await axios.get(
+        const results: any = await axios.get(
             spotifyUrl + `albums/${id}/tracks`
         , {headers: {Authorization: `Bearer ${token}`}})
         return results
     } catch (err) {
-        throw new Error(err)
+         console.log(err)
     }
 }
 

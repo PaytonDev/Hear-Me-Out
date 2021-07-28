@@ -11,7 +11,6 @@ type AlbumSectionProps = {
 
  const AlbumSection = (props: AlbumSectionProps) => {
    const [albumSongs, setAlbumSongs] = useState<any>([])
-
    useEffect(() => {
      async function getCurrentAlbumSongs() {
        if (!props.currentAlbum) return
