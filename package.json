@@ -31,5 +31,8 @@
         "@types/spotify-web-api-node": "^5.0.3",
         "concurrently": "^6.2.0",
         "nodemon": "^2.0.12"
+    },
+    "optionalDependencies": {
+        "fsevents": "2.1.2"
     }
 }
