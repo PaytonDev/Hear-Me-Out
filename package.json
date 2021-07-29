@@ -21,7 +21,8 @@
         "express": "^4.17.1",
         "mongoose": "^5.13.3",
         "spotify-web-api-node": "^5.0.2",
-        "ts-node": "^10.1.0"
+        "ts-node": "^10.1.0",
+        "typescript": "^4.3.5"
     },
     "devDependencies": {
         "@types/cors": "^2.8.12",
