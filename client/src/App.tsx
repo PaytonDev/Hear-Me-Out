@@ -1,5 +1,4 @@
 import HomeContainer from './components/HomePage/HomeContainer';
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import './App.css';
 import LoginPage from './components/LoginPage/LoginPage';
 
@@ -19,18 +18,11 @@ function App() {
   
 
   return (
-    <Router>
+    
       <div className="App">
-        <Switch>
-          <Route exact path="/">
-            {storeCode() ? <HomeContainer code={code}/> : <LoginPage />}
-          </Route>
-          <Route path='/home'>
-          <HomeContainer code={code}/> 
-          </Route>
-        </Switch>
+          {storeCode() ? <HomeContainer code={code}/> : <LoginPage />}  
       </div>
-    </Router>
+ 
   );
 }
 

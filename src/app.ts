@@ -6,12 +6,12 @@ import spotifyWebApi from "spotify-web-api-node";
 
 const app: Express = express()
 
-const PORT = 4000
+const PORT = process.env.PORT || 4000
 
 const credentials  = {
     clientId: "process.env.Client_ID",
     clientSecret: "process.env.CLIENT_SECRET",
-    redirectUri: 'https://hear-me-out-spotify-api.herokuapp.com/home'
+    redirectUri: 'https://hear-me-out-spotify-api.herokuapp.com/'
 }
 
 app.use(cors())
