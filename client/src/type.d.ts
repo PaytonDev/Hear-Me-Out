@@ -90,3 +90,7 @@ type Followers = {
 type External_Ids = {
     isrc: string;
 }
+
+declare module 'express'
+declare module 'cors'
+declare module 'spotify-web-api-node'
