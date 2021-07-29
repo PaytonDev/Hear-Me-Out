@@ -101,10 +101,24 @@ export default function SearchResults(props: SearchResultsProps) {
                 </Grid>
             </Box>
             <Box style={albumVisible ? {display : "block"} : {display : "none"}}>
-                <AlbumSection currentAlbum={currentAlbum} currentArtist={currentArtist} token={props.token} handleShowArtist={makeArtistVisible} handleCurrentArtist={setCurrentArtist} playSong={playSong}/>
+                <AlbumSection
+                    currentAlbum={currentAlbum}
+                    currentArtist={currentArtist}
+                    token={props.token}
+                    handleShowArtist={makeArtistVisible}
+                    handleCurrentArtist={setCurrentArtist}
+                    playSong={playSong}
+                />
             </Box>
             <Box style={artistVisible ? {display : "block"} : {display : "none"}}>
-                <ArtistSection currentArtist={currentArtist} currentAlbum={currentAlbum} handleShowAlbum={makeAlbumVisible} handleCurrentAlbum={setCurrentAlbum} token={props.token} playSong={playSong}/>
+                <ArtistSection
+                    currentArtist={currentArtist}
+                    currentAlbum={currentAlbum}
+                    handleShowAlbum={makeAlbumVisible}
+                    handleCurrentAlbum={setCurrentAlbum}
+                    token={props.token}
+                    playSong={playSong}
+                />
             </Box>
         </Box>
     )
