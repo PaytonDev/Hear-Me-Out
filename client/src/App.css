@@ -17,4 +17,17 @@ orange - #FCA511
   justify-content: center;
 }
 
+a:hover {
+  cursor: pointer;
+}
+
+.clickable {
+  color: inherit
+}
+
+.clickable:hover {
+  cursor: pointer;
+  color: black;
+
+}
 

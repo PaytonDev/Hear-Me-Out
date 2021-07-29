@@ -10,6 +10,10 @@ type AlbumSectionProps = {
   handleCurrentArtist: React.Dispatch<SetStateAction<any>>
   handleShowArtist:  () => void
   playSong: any
+  pauseButtonView: boolean
+  playButtonView: boolean
+  nowPlaying: Song | undefined
+  setNowPlaying: React.Dispatch<React.SetStateAction<Song | undefined>>
 }
 
 
@@ -58,7 +62,7 @@ const AlbumSection = (props: AlbumSectionProps) => {
             <Grid item xs={4}>
                 <Box>
                     <p style={cssStyles.albumTitleStyles}>{props.currentAlbum ? props.currentAlbum.name : "Album Name"}</p>
-                    <p onClick={() => goToArtist(props.currentArtist)}  style={cssStyles.albumTitleArtistStyles}>{props.currentAlbum ? `by ${props.currentAlbum.artists[0].name}` : "Artist Name"}</p>
+                    <p className="clickable" onClick={() => goToArtist(props.currentArtist)}  style={cssStyles.albumTitleArtistStyles}>{props.currentAlbum ? `by ${props.currentAlbum.artists[0].name}` : "Artist Name"}</p>
                 </Box>
             </Grid>
             <Grid item xs={10} className="albumSection-songlist-grid">
@@ -80,8 +84,8 @@ const AlbumSection = (props: AlbumSectionProps) => {
                                             src={props.currentAlbum ? props.currentAlbum.images[2].url : ""}
                                             alt={`${props.currentAlbum ? props.currentAlbum.name : ''} album cover`}
                                         />
-                                        <div onClick={() => props.playSong(song.id)} style={cssStyles.songNameStyles}>{song.name}</div>
-                                        <small onClick={() => goToArtist(props.currentArtist)} style={cssStyles.songInfoStyles}>{song.artists[0].name}</small>
+                                        <div className="clickable" onClick={() => {props.playSong(song.id); props.setNowPlaying(song)}} style={cssStyles.songNameStyles}>{song.name}</div>
+                                        <small className="clickable" onClick={() => goToArtist(props.currentArtist)} style={cssStyles.songInfoStyles}>{song.artists[0].name}</small>
                                         <small style={cssStyles.songInfoStyles}>{convertSongTime(song.duration_ms)}</small>
                                     </Grid>
                                 </li>

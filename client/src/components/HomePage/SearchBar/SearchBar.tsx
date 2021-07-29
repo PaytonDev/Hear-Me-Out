@@ -13,6 +13,10 @@ export type SearchBarProps = {
     currentSong: HTMLAudioElement | undefined;
     handlePlaySong: any
     token: string | undefined
+    pauseButtonView: boolean
+    playButtonView: boolean
+    nowPlaying: Song | undefined
+    setNowPlaying: React.Dispatch<React.SetStateAction<Song | undefined>>
 }
 
 export default function SearchBar(props: SearchBarProps) {
@@ -23,7 +27,6 @@ export default function SearchBar(props: SearchBarProps) {
     const [albums, setAlbums] = useState([])
     const [artists, setArtists] = useState([])
     const [songs, setSongs] = useState([])
-    const [resultsVisible, setResultsVisible] = useState(false)
 
 
     useEffect(() => {
@@ -72,6 +75,10 @@ export default function SearchBar(props: SearchBarProps) {
                     query={query}
                     handlePlaySong={props.handlePlaySong}
                     token={token}
+                    pauseButtonView={props.pauseButtonView}
+                    playButtonView={props.playButtonView}
+                    nowPlaying={props.nowPlaying}
+                    setNowPlaying={props.setNowPlaying}
                 />
         </>
     )

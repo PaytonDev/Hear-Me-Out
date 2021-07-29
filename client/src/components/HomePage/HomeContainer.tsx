@@ -16,7 +16,12 @@ const spotifyApi = new SpotifyWebApi({
 
 const HomeContainer = ({ code }: HomeContainerProps ) => {
     const [currentSong, setCurrentSong] = useState<HTMLAudioElement>()
+    const [pauseButtonView, setPauseButtonView] = useState(false)
+    const [playButtonView, setPlayButtonView] = useState(true)
+    const [nowPlaying, setNowPlaying] = useState<Song>()
+
     let token = useAuth(code)
+
     useEffect(() => {
         if (!token) return;
         spotifyApi.setAccessToken(token)
@@ -26,12 +31,15 @@ const HomeContainer = ({ code }: HomeContainerProps ) => {
         if (song === undefined) return
         setCurrentSong(song)
         song.song.play()
-        song.isPlaying = true
+        setPlayButtonView(!playButtonView)
+        setPauseButtonView(!pauseButtonView)
     }
 
     const handlePauseSong = (song: any) => {
+        if (song === undefined) return
         song.song.pause()
-        song.isPlaying = false
+        setPauseButtonView(!pauseButtonView)
+        setPlayButtonView(!playButtonView)
     }
 
     return (
@@ -43,7 +51,11 @@ const HomeContainer = ({ code }: HomeContainerProps ) => {
                 <SearchBar
                     currentSong={currentSong}
                     handlePlaySong={handlePlaySong}
+                    pauseButtonView={pauseButtonView}
+                    playButtonView={playButtonView}
                     token={token}
+                    nowPlaying={nowPlaying}
+                    setNowPlaying={setNowPlaying}
                 />
             </Container>
             <PlayerWidget
@@ -51,6 +63,10 @@ const HomeContainer = ({ code }: HomeContainerProps ) => {
                 handlePlaySong={handlePlaySong}
                 handlePauseSong={handlePauseSong} 
                 token={token}
+                pauseButtonView={pauseButtonView}
+                playButtonView={playButtonView}
+                nowPlaying={nowPlaying}
+                setNowPlaying={setNowPlaying}
             />
         </div>
     )

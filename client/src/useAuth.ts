@@ -16,7 +16,7 @@ const useAuth = (code: string | null)=> {
                 setAccessToken(res.data.token);
             })
             .catch((err) => {
-                console.log('Something is up with your login request', err)
+                console.log('Not sure what this error is so I really hope you bring it up', err)
             });
     }, [code, instance])
 

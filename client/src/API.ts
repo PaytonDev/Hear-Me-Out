@@ -4,16 +4,16 @@ const spotifyUrl: string = "https://api.spotify.com/v1/"
 
 
 
-export const getSearchResults = async (query: string, token: string | undefined): Promise<AxiosResponse> => {
+export const getSearchResults = async (query: string, token: string | undefined)=> {
     const modifiedQuery: string = query.replaceAll(" ", "+")
 
         try {
-            const results: AxiosResponse = await axios.get(
+            const results: any = await axios.get(
                 spotifyUrl + `search?q=${modifiedQuery}&type=artist,album,track&limit=4`
             , {headers: {Authorization: `Bearer ${token}`}})
             return results
         } catch (err) {
-            throw new Error(err)
+            console.log(err)
         }
     }
 
@@ -51,6 +51,17 @@ export const getArtist = async (id: string, token: string | undefined): Promise<
         return results
     } catch (err) {
         throw new Error(err)
+    }
+}
+
+export const getArtistTopSongs = async (id: string, token: string | undefined)=> {
+    try {
+        const results: any = await axios.get(
+            spotifyUrl + `artists/${id}/top-tracks`
+        , {headers: {Authorization: `Bearer ${token}`}, params: {market : 'from_token'}})
+        return results
+    } catch (err) {
+        console.log(err)
     }
 }
 

@@ -12,6 +12,11 @@ type ArtistSectionProps = {
     handleCurrentAlbum: React.Dispatch<React.SetStateAction<undefined>>
     playSong: any
     token: string | undefined
+    pauseButtonView: boolean
+    playButtonView: boolean
+    nowPlaying: Song | undefined
+    setNowPlaying: React.Dispatch<React.SetStateAction<Song | undefined>>
+ 
 }
 
 
@@ -72,7 +77,7 @@ const ArtistSection = (props: ArtistSectionProps) => {
     return (
         <Grid container spacing={2} className={seeAllOpen ? classes.containerShow : classes.containerHide} alignItems={"center"}>
 
-            <Grid item xs={6} alignItems="center">
+            <Grid item xs={6} >
                 <img
                     src={props.currentArtist ? props.currentArtist.images[0].url : "Artist Image"}
                     alt={`${props.currentArtist ? props.currentArtist.name : ''} avatar`}
@@ -96,7 +101,7 @@ const ArtistSection = (props: ArtistSectionProps) => {
                                             src={props.currentArtist ? song.album.images[2].url : ""}
                                             alt={`${props.currentArtist ? song.album.name : ''} album cover`}
                                         />
-                                        <div onClick={() => props.playSong(song.id)} style={cssStyles.songNameStyles}>{song.name}</div>
+                                        <div onClick={() => {props.playSong(song.id); props.setNowPlaying(song)}} style={cssStyles.songNameStyles}>{song.name}</div>
                                         </Grid>
                                         <Grid item xs={3} >
                                             <div>
@@ -120,7 +125,7 @@ const ArtistSection = (props: ArtistSectionProps) => {
                     <p onClick={seeAllToggle}>See All</p>
                 </Grid>
                 {props.currentArtist ? artistAlbums.map((album: any, idx: number) => (
-                    <Grid item sm={4} md={3} lg={2} key={idx} spacing={1}>
+                    <Grid item sm={4} md={3} lg={2} key={idx}>
                         <Box onClick={() => {props.handleCurrentAlbum(album); props.handleShowAlbum()}}>
                             <img key={`${idx}-image`} src={album.images[1].url} alt={`${album.name} avatar`} style={{maxHeight : 150}}/>
                             <div key={`${idx}-album`} >{album.name}</div>
