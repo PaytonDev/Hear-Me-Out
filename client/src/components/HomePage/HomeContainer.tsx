@@ -1,6 +1,6 @@
 import { Container } from "@material-ui/core/"
 import { useEffect, useState } from "react"
-import useAuth from "../../useAuth";
+import useAuth from "../../controller/useAuth";
 import PlayerWidget from "../PlayerWidget/PlayerWidget";
 import "./HomeContainer.css"
 import SearchBar from "./SearchBar/SearchBar"

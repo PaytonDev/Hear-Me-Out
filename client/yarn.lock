@@ -1796,10 +1796,10 @@
   dependencies:
     "axios" "*"
 
-"@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
-  "integrity" "sha512-wMTHiiTiBAAPebqaPiPDLFA4LYPKr6Ph0Xq/6rq1Ur3v66HXyG+clfR9CNETkD7MQS8ZHvpQOtA53DLws5WAEQ=="
-  "resolved" "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.1.12.tgz"
-  "version" "7.1.12"
+"@types/babel__core@^7.0.0", "@types/babel__core@^7.1.15", "@types/babel__core@^7.1.7":
+  "integrity" "sha512-bxlMKPDbY8x5h6HBwVzEOk2C8fb6SLfYQ5Jw3uBYuYF1lfWk/kbLd81la82vrIkBb0l+JdmrZaDikPrNxpS/Ew=="
+  "resolved" "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.1.15.tgz"
+  "version" "7.1.15"
   dependencies:
     "@babel/parser" "^7.1.0"
     "@babel/types" "^7.0.0"
@@ -1807,10 +1807,10 @@
     "@types/babel__template" "*"
     "@types/babel__traverse" "*"
 
-"@types/babel__generator@*":
-  "integrity" "sha512-MdSJnBjl+bdwkLskZ3NGFp9YcXGx5ggLpQQPqtgakVhsWK0hTtNYhjpZLlWQTviGTvF8at+Bvli3jV7faPdgeQ=="
-  "resolved" "https://registry.npmjs.org/@types/babel__generator/-/babel__generator-7.6.2.tgz"
-  "version" "7.6.2"
+"@types/babel__generator@*", "@types/babel__generator@^7.6.3":
+  "integrity" "sha512-/GWCmzJWqV7diQW54smJZzWbSFf4QYtF71WCKhcx6Ru/tFyQIY2eiiITcCAeuPbNSvT9YCGkVMqqvSk2Z0mXiA=="
+  "resolved" "https://registry.npmjs.org/@types/babel__generator/-/babel__generator-7.6.3.tgz"
+  "version" "7.6.3"
   dependencies:
     "@babel/types" "^7.0.0"
 

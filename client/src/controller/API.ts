@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 const spotifyUrl: string = "https://api.spotify.com/v1/" 
+
+
 // Functions for Spotify API Calls
-
-
 
 export const getSearchResults = async (query: string, token: string | undefined)=> {
     const modifiedQuery: string = query.replaceAll(" ", "+")
@@ -48,6 +48,7 @@ export const getArtist = async (id: string, token: string | undefined): Promise<
         const results: AxiosResponse = await axios.get(
             spotifyUrl + `artists/${id}`
         , {headers: {Authorization: `Bearer ${token}`}})
+        console.log(results)
         return results
     } catch (err) {
         throw new Error(err)

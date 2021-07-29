@@ -6,18 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
 var path_1 = __importDefault(require("path"));
-// import bodyParser from "body-parser";
 var spotify_web_api_node_1 = __importDefault(require("spotify-web-api-node"));
 var app = express_1.default();
 var PORT = process.env.PORT || 4000;
 var credentials = {
-    clientId: "process.env.Client_ID",
-    clientSecret: "process.env.CLIENT_SECRET",
+    clientId: process.env.Client_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     redirectUri: 'https://hear-me-out-spotify-api.herokuapp.com/'
 };
 app.use(cors_1.default());
 app.use(express_1.default.json());
-app.use(express_1.default.static(path_1.default.join(__dirname,"..", "..", "client", "build")));
+app.use(express_1.default.static(path_1.default.join(__dirname, "..", "client", "build")));
 app.get('/', function (req, res) { return res.sendFile(path_1.default.resolve(__dirname, "build", "index.html")); });
 app.post("/login", function (req, res) {
     var spotifyApi = new spotify_web_api_node_1.default(credentials);

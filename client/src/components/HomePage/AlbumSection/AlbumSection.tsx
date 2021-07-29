@@ -1,6 +1,6 @@
 import { Box, Grid } from "@material-ui/core";
 import { useState, useEffect, SetStateAction } from "react";
-import { getAlbumSongs } from "../../../API";
+import { getAlbumSongs } from "../../../controller/API";
 import { muiGridContainer, cssStyles } from "./styles"
 
 type AlbumSectionProps = {

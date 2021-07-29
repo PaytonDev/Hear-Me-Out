@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import cors from "cors"
 import path from "path";
-// import bodyParser from "body-parser";
+
 import spotifyWebApi from "spotify-web-api-node";
 
 const app: Express = express()
@@ -9,8 +9,8 @@ const app: Express = express()
 const PORT = process.env.PORT || 4000
 
 const credentials  = {
-    clientId: "process.env.Client_ID",
-    clientSecret: "process.env.CLIENT_SECRET",
+    clientId: process.env.Client_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     redirectUri: 'https://hear-me-out-spotify-api.herokuapp.com/'
 }
 
@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname, "..","..", "client", "build")));
 app.get('/', (req: any, res: any) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
 app.post("/login", function(req: any, res: any) {
+
     let spotifyApi = new spotifyWebApi(credentials)
     let code = req.body.code
     spotifyApi.authorizationCodeGrant(code).then((data: any) => {

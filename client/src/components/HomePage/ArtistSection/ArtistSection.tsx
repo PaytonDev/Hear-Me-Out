@@ -1,6 +1,6 @@
 import { Box, Grid } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { getArtistAlbums, getArtistTopSongs } from "../../../API";
+import { getArtistAlbums, getArtistTopSongs } from "../../../controller/API";
 import  cssStyles from "./styles"
 import { makeStyles } from "@material-ui/core/styles";
 

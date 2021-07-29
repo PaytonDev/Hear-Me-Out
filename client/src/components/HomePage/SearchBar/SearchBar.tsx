@@ -5,7 +5,7 @@ import Search from "@material-ui/icons/Search"
 import SearchResults from "../SearchResults";
 import styles from "./styles";
 import { useState, useEffect } from "react";
-import { getSearchResults } from "../../../API";
+import { getSearchResults } from "../../../controller/API";
 
 
 
