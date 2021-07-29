@@ -49,10 +49,8 @@ app.post("/refresh", function (req, res) {
             accessToken: data.body.access_token,
             expiresIn: data.body.expires_in,
         });
-        console.log('refreshed:', res.json);
     })
         .catch(function (err) {
-        console.log(err);
         res.sendStatus(400);
     });
 });

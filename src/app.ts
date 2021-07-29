@@ -32,6 +32,7 @@ app.post("/login", function(req: any, res: any) {
         })
     })
     .catch((err: any) => {
+        console.log(err)
         res.sendStatus(400)
     })
 })
