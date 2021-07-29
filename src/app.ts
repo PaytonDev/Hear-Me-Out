@@ -13,16 +13,14 @@ app.use(express.json())
 
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
-app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
 const credentials  = {
     clientId: process.env.Client_ID,
     clientSecret: process.env.CLIENT_SECRET,
     redirectUri: 'https://hear-me-out-spotify-api.herokuapp.com/home'
 }
-// TODO: Update error handling!!!
-app.get("/", )
 
+app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
 app.post("/login", function(req, res) {
     let spotifyApi = new spotifyWebApi(credentials)
