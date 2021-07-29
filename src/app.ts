@@ -19,25 +19,24 @@ app.use(express.json())
 
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
-app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
+app.get('/', (req: any, res: any) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
-app.post("/login", function(req, res) {
+app.post("/login", function(req: any, res: any) {
     let spotifyApi = new spotifyWebApi(credentials)
     let code = req.body.code
-    spotifyApi.authorizationCodeGrant(code).then((data) => {
+    spotifyApi.authorizationCodeGrant(code).then((data: any) => {
         res.json({
             token : data.body.access_token,
             refresh : data.body.refresh_token,
             expiresIn: data.body.expires_in
         })
     })
-    .catch((err) => {
-        console.log(err);
+    .catch((err: any) => {
         res.sendStatus(400)
     })
 })
 
-app.post("/refresh", (req, res) => {
+app.post("/refresh", (req: any, res: any) => {
     let refreshToken = req.body.refreshToken
 
     let spotifyApi = new spotifyWebApi({
@@ -48,15 +47,13 @@ app.post("/refresh", (req, res) => {
     })
     spotifyApi
         .refreshAccessToken()
-        .then((data) => {
+        .then((data: any) => {
             res.json({
                 accessToken: data.body.access_token,
                 expiresIn: data.body.expires_in,
             })
-            console.log('refreshed:', res.json)
         })
-        .catch((err) => {
-            console.log(err);
+        .catch((err: any) => {
             res.sendStatus(400);
         });
 });
