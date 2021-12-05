@@ -6,14 +6,13 @@ const spotifyUrl: string = "https://api.spotify.com/v1/"
 
 export const getSearchResults = async (query: string, token: string | undefined)=> {
     const modifiedQuery: string = query.replaceAll(" ", "+")
-
         try {
             const results: any = await axios.get(
                 spotifyUrl + `search?q=${modifiedQuery}&type=artist,album,track&limit=4`
             , {headers: {Authorization: `Bearer ${token}`}})
             return results
-        } catch (err) {
-            console.log(err)
+        } catch (err: any) {
+            throw new Error(err)
         }
     }
 
@@ -25,7 +24,7 @@ export const getAlbum = async (id: string, token: string | undefined): Promise<A
             spotifyUrl + `albums/${id}`
         , {headers: {Authorization: `Bearer ${token}`}})
         return results
-    } catch (err) {
+    } catch (err: any) {
         throw new Error(err)
     }
 }
@@ -37,8 +36,8 @@ export const getAlbumSongs = async (id: string, token: string | undefined) => {
             spotifyUrl + `albums/${id}/tracks`
         , {headers: {Authorization: `Bearer ${token}`}})
         return results
-    } catch (err) {
-         console.log(err)
+    } catch (err: any) {
+        throw new Error(err)
     }
 }
 
@@ -48,9 +47,8 @@ export const getArtist = async (id: string, token: string | undefined): Promise<
         const results: AxiosResponse = await axios.get(
             spotifyUrl + `artists/${id}`
         , {headers: {Authorization: `Bearer ${token}`}})
-        console.log(results)
         return results
-    } catch (err) {
+    } catch (err: any) {
         throw new Error(err)
     }
 }
@@ -61,8 +59,8 @@ export const getArtistTopSongs = async (id: string, token: string | undefined)=>
             spotifyUrl + `artists/${id}/top-tracks`
         , {headers: {Authorization: `Bearer ${token}`}, params: {market : 'from_token'}})
         return results
-    } catch (err) {
-        console.log(err)
+    } catch (err: any) {
+        throw new Error(err)
     }
 }
 
@@ -72,7 +70,7 @@ export const getArtistAlbums = async (id: string, token: string | undefined): Pr
             spotifyUrl + `artists/${id}/albums`
         , {headers: {Authorization: `Bearer ${token}`}})
         return results
-    } catch (err) {
+    } catch (err: any) {
         throw new Error(err)
     }
 }
@@ -84,7 +82,7 @@ export const getSong = async (id: string, token: string | undefined): Promise<Ax
             spotifyUrl + `tracks/${id}`
         , {headers: {Authorization: `Bearer ${token}`}})
         return results
-    } catch (err) {
+    } catch (err: any) {
         throw new Error(err)
     }
 }

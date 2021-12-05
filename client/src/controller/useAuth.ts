@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+// Function used to return Access Token needed to make all other API Calls.
 
-const useAuth = (code: string | null)=> {
+const useAuth = (code: string | null) => {
     const [accessToken, setAccessToken] = useState<string>();
     const [refreshToken] = useState<string>();
     const [expiresIn, setExpiresIn] = useState<number>();
 
+
     useEffect(() => {
         if (!code) return
-        axios.post('/login', {code})
+        axios.post('http://localhost:4000/login', {code})
             .then((res) => {
                 window.history.pushState({}, '', "/");
                 setAccessToken(res.data.token);
             })
             .catch((err) => {
-                console.log('Not sure what this error is so I really hope you bring it up', err)
+                console.log( err)
             });
     }, [code])
 

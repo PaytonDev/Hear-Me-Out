@@ -1,10 +1,11 @@
 import { Box, Grid, Fade } from "@material-ui/core";
 import { Person, Album, MusicNote } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { getArtist, getSong } from "../../controller/API"
-import AlbumSection from "./AlbumSection/AlbumSection";
-import ArtistSection from "./ArtistSection/ArtistSection";
+import { getArtist, getSong } from "../../../../controller/API"
+import AlbumSection from "../../AlbumSection/AlbumSection";
+import ArtistSection from "../../ArtistSection/ArtistSection";
 import "./SearchResults.css"
+
 
 
 
@@ -70,7 +71,7 @@ export default function SearchResults(props: SearchResultsProps) {
             <Box className="searchResults-icon">
                 <Person fontSize="small" />
             </Box>
-            <div className="clickable" onClick={() => {makeArtistVisible(); setCurrentArtist(artist); console.log(artist)}}>{artist.name}</div>
+            <div className="clickable" onClick={() => {makeArtistVisible(); setCurrentArtist(artist);}}>{artist.name}</div>
         </li>
     )
     const listAlbums = props.albums.map((album: any, idx: number) => 
@@ -86,7 +87,7 @@ export default function SearchResults(props: SearchResultsProps) {
             <Box className="searchResults-icon">
                 <MusicNote fontSize="small" />
             </Box>
-            <div className={"clickable"} onClick={() =>{playSong(song.id); props.setNowPlaying(song)}}>{song.name}</div>
+            <div className="clickable" onClick={() =>{playSong(song.id); props.setNowPlaying(song)}}>{song.name}</div>
         </li>
     )
 

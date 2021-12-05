@@ -1,16 +1,10 @@
-/*
-dark-grey - #212529
-orange - #FCA511 
-
-*/
-
 .App {
   text-align: center;
   background-color: #212529;
   min-height: 100vh;
   max-width: 100%;
   margin: 0;
-  color: rgb(252, 165, 17);
+  color: #fca511;
   font-family: 'Roboto', sans-serif;
   display: flex;
   align-items: center;

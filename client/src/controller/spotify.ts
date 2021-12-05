@@ -1,8 +1,6 @@
 const authURL = 'https://accounts.spotify.com/authorize';
-const redirectURi = 'https://hear-me-out-spotify-api.herokuapp.com/'
+const redirectURi = 'http://localhost:3000/'
 const clientId = '76007946b07a474487db86cb749ba027'
-
-
 
 const scopes = [
     'streaming',

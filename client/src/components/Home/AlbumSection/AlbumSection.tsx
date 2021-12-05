@@ -1,9 +1,16 @@
+// General Desc: Section to display album songs after an Album selection is made from the Artist Section or Search Results.
+
+// User Interactions:
+//  - Artist Name is a Link.
+//  - A Song name is a link that plays the song.
+
+
 import { Box, Grid } from "@material-ui/core";
 import { useState, useEffect, SetStateAction } from "react";
 import { getAlbumSongs } from "../../../controller/API";
 import { muiGridContainer, cssStyles } from "./styles"
 
-type AlbumSectionProps = {
+export type AlbumSectionProps = {
   currentAlbum: any
   currentArtist: any
   token: string | undefined
@@ -27,10 +34,9 @@ const AlbumSection = (props: AlbumSectionProps) => {
        let res = await getAlbumSongs(props.currentAlbum.id, props.token)
        setAlbumSongs(res.data.items)
      }
-
      getCurrentAlbumSongs()
-
    },[props.currentAlbum, props.token])
+
 
    const goToArtist = (artist: any) => {
        if (props.currentAlbum) {
@@ -59,11 +65,23 @@ const AlbumSection = (props: AlbumSectionProps) => {
                     />
                 </Box>
             </Grid>
+
             <Grid item xs={4}>
                 <Box>
-                    <p style={cssStyles.albumTitleStyles}>{props.currentAlbum ? props.currentAlbum.name : "Album Name"}</p>
-                    <p className="clickable" onClick={() => goToArtist(props.currentArtist)}  style={cssStyles.albumTitleArtistStyles}>{props.currentAlbum ? `by ${props.currentAlbum.artists[0].name}` : "Artist Name"}</p>
+                    <p style={cssStyles.albumTitleStyles}>
+                        {props.currentAlbum ? props.currentAlbum.name : "Album Name"}
+                    </p>
+
+                    {/* Artist Name Link */}
+                    <p className="clickable"
+                        onClick={() => goToArtist(props.currentArtist)} 
+                        style={cssStyles.albumTitleArtistStyles}>
+
+                        {props.currentAlbum ? `by ${props.currentAlbum.artists[0].name}` : "Artist Name"}
+
+                    </p>
                 </Box>
+
             </Grid>
             <Grid item xs={10} className="albumSection-songlist-grid">
                 <Box >
@@ -84,7 +102,10 @@ const AlbumSection = (props: AlbumSectionProps) => {
                                             src={props.currentAlbum ? props.currentAlbum.images[2].url : ""}
                                             alt={`${props.currentAlbum ? props.currentAlbum.name : ''} album cover`}
                                         />
+                                        {/* Song Link */}
                                         <div className="clickable" onClick={() => {props.playSong(song.id); props.setNowPlaying(song)}} style={cssStyles.songNameStyles}>{song.name}</div>
+
+                                        {/* Artist Link */}
                                         <small className="clickable" onClick={() => goToArtist(props.currentArtist)} style={cssStyles.songInfoStyles}>{song.artists[0].name}</small>
                                         <small style={cssStyles.songInfoStyles}>{convertSongTime(song.duration_ms)}</small>
                                     </Grid>

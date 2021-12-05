@@ -5,10 +5,10 @@ import styles from "./styles";
 
 const StyledButton = withStyles({
     root: {
-        background: "rgba(0, 0, 0, 0.1)",
+        background: "rgb(252, 165, 17)",
         borderRadius: 10,
         border: 2,
-        color: "rgb(252, 165, 17)",
+        color: "#1d1f22",
         height: 60,
         padding: '0 25px',
         boxShadow: `0 2.8px 2.2px rgba(0, 0, 0, 0.034),
@@ -24,7 +24,7 @@ const LoginPage  = () => {
         <Grid>
             <Box className={classes.loginHeader}>Welcome To <br/> Hear Me Out</Box>
             <p>This app uses Spotify so please Login Below.</p>
-            <StyledButton color="inherit" href={loginURL}>Login with Spotify</StyledButton>
+            <StyledButton href={loginURL}>Login with Spotify</StyledButton>
         </Grid>
     )
 }

@@ -2,11 +2,11 @@ import { Container } from "@material-ui/core/"
 import { useEffect, useState } from "react"
 import useAuth from "../../controller/useAuth";
 import PlayerWidget from "../PlayerWidget/PlayerWidget";
-import "./HomeContainer.css"
 import SearchBar from "./SearchBar/SearchBar"
 import SpotifyWebApi from "spotify-web-api-node";
+import "./Home.css"
 
-interface HomeContainerProps {
+interface HomeProps {
     code: string | null
 }
 
@@ -14,14 +14,14 @@ const spotifyApi = new SpotifyWebApi({
     clientId: "76007946b07a474487db86cb749ba027"
 })
 
-const HomeContainer = ({ code }: HomeContainerProps ) => {
+const Home = ({ code }: HomeProps ) => {
     const [currentSong, setCurrentSong] = useState<HTMLAudioElement>()
     const [pauseButtonView, setPauseButtonView] = useState(false)
     const [playButtonView, setPlayButtonView] = useState(true)
     const [nowPlaying, setNowPlaying] = useState<Song>()
+    const [openRecentlyPlayed, setOpenRecentlyPlayed] = useState(false)
 
     let token = useAuth(code)
-
     useEffect(() => {
         if (!token) return;
         spotifyApi.setAccessToken(token)
@@ -67,9 +67,11 @@ const HomeContainer = ({ code }: HomeContainerProps ) => {
                 playButtonView={playButtonView}
                 nowPlaying={nowPlaying}
                 setNowPlaying={setNowPlaying}
+                openRecentlyPlayed={openRecentlyPlayed}
+                setOpenRecentlyPlayed={setOpenRecentlyPlayed}
             />
         </div>
     )
 }
 
-export default HomeContainer;
+export default Home;

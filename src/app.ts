@@ -9,22 +9,23 @@ const app: Express = express()
 const PORT = process.env.PORT || 4000
 
 const credentials  = {
-    clientId: process.env.Client_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    redirectUri: 'https://hear-me-out-spotify-api.herokuapp.com/'
+    clientId: "76007946b07a474487db86cb749ba027",
+    clientSecret: "8975d340b7814c8cb8a754f96d013b65",
+    redirectUri: 'http://localhost:3000/'
 }
 
 app.use(cors())
 app.use(express.json())
 
-app.use(express.static(path.join(__dirname, "..","..", "client", "build")));
+app.use(express.static(path.join(__dirname, "..", "..", "client", "build")));
 
 app.get('/', (req: any, res: any) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
 app.post("/login", function(req: any, res: any) {
-
+    
     let spotifyApi = new spotifyWebApi(credentials)
     let code = req.body.code
+    console.log(code)
     spotifyApi.authorizationCodeGrant(code).then((data: any) => {
         res.json({
             token : data.body.access_token,

@@ -1,29 +1,23 @@
-import HomeContainer from './components/HomePage/HomeContainer';
-import './App.css';
-import LoginPage from './components/LoginPage/LoginPage';
-
+import Home from "./components/Home/Home";
+import "./App.css";
+import LoginPage from "./components/Login/LoginPage";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
 
 function App() {
-  
-  const code = new URLSearchParams(window.location.search).get('code')
+  const song = useAppSelector((state) => state.musicPlayer.currentSong);
+
+  const code = new URLSearchParams(window.location.search).get("code");
 
   const storeCode = () => {
-      if (code) {
-      window.localStorage.setItem('yourCode', `${code}`)
-      let yourCode = localStorage.getItem('yourCode')
-      return yourCode
+    if (code) {
+      window.localStorage.setItem("yourCode", `${code}`);
+      let yourCode = localStorage.getItem("yourCode");
+      return yourCode;
     }
-    return
-  }
-  
+    return;
+  };
 
-  return (
-    
-      <div className="App">
-          {storeCode() ? <HomeContainer code={code}/> : <LoginPage />}  
-      </div>
- 
-  );
+  return <div className="App">{storeCode() ? <Home code={code} /> : <LoginPage />}</div>;
 }
 
 export default App;
