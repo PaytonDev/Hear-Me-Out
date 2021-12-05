@@ -9,8 +9,8 @@ const app: Express = express()
 const PORT = process.env.PORT || 4000
 
 const credentials  = {
-    clientId: "76007946b07a474487db86cb749ba027",
-    clientSecret: "8975d340b7814c8cb8a754f96d013b65",
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     redirectUri: 'http://localhost:3000/'
 }
 
