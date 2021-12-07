@@ -1,0 +1,60 @@
+.widget-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  background-color: #000;
+}
+.scroll-left {
+  overflow: hidden;
+  background: inherit;
+  height: 40px;
+  color: inherit;
+}
+.scroll-left p {
+  margin: 0;
+  line-height: 50px;
+  text-align: center;
+  white-space: nowrap;
+  /* Starting position */
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  /* Apply animation to this element */
+  -moz-animation: scroll-left 15s linear infinite;
+  -webkit-animation: scroll-left 15s linear infinite;
+  animation: scroll-left 15s linear infinite;
+}
+/* Move it (define the animation) */
+@-moz-keyframes scroll-left {
+  0% {
+    -moz-transform: translateX(100%);
+  }
+  100% {
+    -moz-transform: translateX(-150%);
+  }
+}
+@-webkit-keyframes scroll-left {
+  0% {
+    -webkit-transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(-150%);
+  }
+}
+@keyframes scroll-left {
+  0% {
+    -moz-transform: translateX(100%); /* Browser bug fix */
+    -webkit-transform: translateX(100%); /* Browser bug fix */
+    transform: translateX(100%);
+  }
+  100% {
+    -moz-transform: translateX(-150%); /* Browser bug fix */
+    -webkit-transform: translateX(-150%); /* Browser bug fix */
+    transform: translateX(-150%);
+  }
+}
