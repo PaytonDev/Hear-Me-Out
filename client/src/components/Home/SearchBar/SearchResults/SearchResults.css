@@ -1,31 +1,29 @@
 .searchResults-box {
-    max-width: 60vw;
-    margin: 0 auto;
+  max-width: 60vw;
+  margin: 0 auto;
 }
 
-
 .searchResults-grid-container {
-    min-width: 100%;
-    display: flex;
-    text-align: left;
-    align-items: center; 
-     padding: 15px;
-    background-color: #1d1f22;
-    border-radius: 10px;
-} 
+  min-width: 100%;
+  display: flex;
+  text-align: left;
+  align-items: start;
+  padding: 15px;
+  border-radius: 10px;
+}
 
 ul {
-    list-style-type: none;
-    text-align: left;
-    padding: 0;
+  list-style-type: none;
+  text-align: left;
+  padding: 0;
 }
 
 .searchResults-link {
-    display: flex;
-     flex-direction: row; 
-     align-items: center;
-} 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
 .searchResults-icon {
-    margin-right: 10px
+  margin-right: 10px;
 }
