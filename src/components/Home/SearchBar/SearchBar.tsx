@@ -5,7 +5,7 @@ import Search from "@material-ui/icons/Search";
 import SearchResults from "./SearchResults/SearchResults";
 import styles from "./styles";
 import { useState, useEffect } from "react";
-import { getSearchResults } from "../../../controller/API";
+import { useGetSearchResultsQuery } from "../../../features/now-playing/now-playing-api";
 
 /*
 On load the Searchbar component uses the getSearchResults API function, user query,
@@ -18,7 +18,6 @@ On load the Searchbar component uses the getSearchResults API function, user que
 export type SearchBarProps = {
   currentSong: HTMLAudioElement | undefined;
   handlePlaySong: any;
-  token: string | undefined;
   pauseButtonView: boolean;
   playButtonView: boolean;
   nowPlaying: Song | undefined;
@@ -26,7 +25,6 @@ export type SearchBarProps = {
 };
 
 export default function SearchBar(props: SearchBarProps) {
-  const token = props.token;
   const classes = styles();
 
   const [query, setQuery] = useState("");
@@ -34,24 +32,23 @@ export default function SearchBar(props: SearchBarProps) {
   const [artists, setArtists] = useState([]);
   const [songs, setSongs] = useState([]);
 
-  // const song = useSelector((store: RootState) => ({song: store?.currentSong?.song}))
+  const { data, isLoading } = useGetSearchResultsQuery(query);
 
   // Loading token as
   useEffect(() => {
     if (!query) return;
 
-    handleChange(query, props.token);
-  }, [query, props.token]);
+    const handleChange = async (query: string) => {
+      if (query === "") {
+        return;
+      }
+      setAlbums(data.albums.items);
+      setArtists(data.artists.items);
+      setSongs(data.tracks.items);
+    };
 
-  const handleChange = async (query: string, token: string | undefined) => {
-    if (query === "") {
-      return;
-    }
-    const res = await getSearchResults(query, token);
-    setAlbums(res.data.albums.items);
-    setArtists(res.data.artists.items);
-    setSongs(res.data.tracks.items);
-  };
+    handleChange(query);
+  }, [query, data]);
 
   return (
     <>
@@ -72,19 +69,20 @@ export default function SearchBar(props: SearchBarProps) {
         />
       </FormControl>
 
-      <SearchResults
-        artists={artists}
-        albums={albums}
-        songs={songs}
-        currentSong={props.currentSong}
-        query={query}
-        handlePlaySong={props.handlePlaySong}
-        token={token}
-        pauseButtonView={props.pauseButtonView}
-        playButtonView={props.playButtonView}
-        nowPlaying={props.nowPlaying}
-        setNowPlaying={props.setNowPlaying}
-      />
+      {isLoading ? null : (
+        <SearchResults
+          artists={artists}
+          albums={albums}
+          songs={songs}
+          currentSong={props.currentSong}
+          query={query}
+          handlePlaySong={props.handlePlaySong}
+          pauseButtonView={props.pauseButtonView}
+          playButtonView={props.playButtonView}
+          nowPlaying={props.nowPlaying}
+          setNowPlaying={props.setNowPlaying}
+        />
+      )}
     </>
   );
 }

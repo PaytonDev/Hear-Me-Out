@@ -9,7 +9,6 @@ type PlayerWidgetProps = {
   currentSong: any;
   handlePlaySong: any;
   handlePauseSong: any;
-  token: string | undefined;
   pauseButtonView: boolean;
   playButtonView: boolean;
   nowPlaying: Song | undefined;
@@ -28,10 +27,6 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
   const handleCloseQueue = () => setShowQueue(false);
 
   const classes = styles();
-
-  const makeRecentlyPlayed = () => {
-    let recent = [];
-  };
 
   return (
     <Grid

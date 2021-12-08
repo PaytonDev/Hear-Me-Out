@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
+// You need to create a credentials file to import your ID and SECRET KEY FROM
+import { CLIENT_ID, CLIENT_SECRET } from "./credentials";
 
 import spotifyWebApi from "spotify-web-api-node";
 
@@ -9,15 +11,15 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 const credentials = {
-  clientId: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
+  clientId: CLIENT_ID,
+  clientSecret: CLIENT_SECRET,
   redirectUri: "http://localhost:3000/",
 };
 
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "..", "..", "client", "build")));
+app.use(express.static(path.join(__dirname, "..", "build")));
 
 app.get("/", (req: any, res: any) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
@@ -35,7 +37,7 @@ app.post("/login", function (req: any, res: any) {
       });
     })
     .catch((err: any) => {
-      console.log(err);
+      console.log(err.message);
       res.sendStatus(400);
     });
 });

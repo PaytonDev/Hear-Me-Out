@@ -70,7 +70,7 @@ type External_Ids = {
 };
 
 type SongObj = {
-  song_details: {};
+  song_details: object;
   song_audio: HTMLAudioElement | null;
 };
 

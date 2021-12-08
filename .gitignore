@@ -4,5 +4,5 @@
 # dependencies
 /node_modules
 /build
-/server/app.ts
+/src/server/credentials.ts
 package-lock.json

@@ -4,15 +4,18 @@ import useAuth from "../../controller/useAuth";
 import PlayerWidget from "../PlayerWidget/PlayerWidget";
 import SearchBar from "./SearchBar/SearchBar";
 import SpotifyWebApi from "spotify-web-api-node";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import { setToken } from "../../features/auth/auth-slice";
 import "./Home.css";
-import { credentials } from "../../../server/app";
+import { CLIENT_ID } from "../../server/credentials";
 
 interface HomeProps {
   code: string | null;
 }
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: credentials.clientId,
+  clientId: CLIENT_ID,
 });
 
 const Home = ({ code }: HomeProps) => {
@@ -23,10 +26,14 @@ const Home = ({ code }: HomeProps) => {
   const [openRecentlyPlayed, setOpenRecentlyPlayed] = useState(false);
 
   let token = useAuth(code);
+  const dispatch = useAppDispatch();
+  let storeToken = useAppSelector((state: RootState) => state.auth.token);
+
   useEffect(() => {
     if (!token) return;
     spotifyApi.setAccessToken(token);
-  }, [token]);
+    dispatch(setToken(token));
+  }, [token, dispatch]);
 
   const handlePlaySong = (song: any) => {
     if (song === undefined) return;
@@ -52,7 +59,6 @@ const Home = ({ code }: HomeProps) => {
           handlePlaySong={handlePlaySong}
           pauseButtonView={pauseButtonView}
           playButtonView={playButtonView}
-          token={token}
           nowPlaying={nowPlaying}
           setNowPlaying={setNowPlaying}
         />
@@ -61,7 +67,6 @@ const Home = ({ code }: HomeProps) => {
         currentSong={currentSong}
         handlePlaySong={handlePlaySong}
         handlePauseSong={handlePauseSong}
-        token={token}
         pauseButtonView={pauseButtonView}
         playButtonView={playButtonView}
         nowPlaying={nowPlaying}

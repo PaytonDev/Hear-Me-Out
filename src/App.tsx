@@ -5,9 +5,9 @@ import { ThemeProvider } from "@material-ui/styles";
 import { CssBaseline } from "@material-ui/core";
 import { theme } from "./theme";
 
-function App() {
-  const code = new URLSearchParams(window.location.search).get("code");
+export const code = new URLSearchParams(window.location.search).get("code");
 
+function App() {
   const storeCode = () => {
     if (code) {
       window.localStorage.setItem("yourCode", `${code}`);
