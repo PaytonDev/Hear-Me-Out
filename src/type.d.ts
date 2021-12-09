@@ -22,7 +22,7 @@ type Album = {
   external_urls: External_Urls;
   href: string;
   id: string;
-  images: [Image];
+  images: Image[];
   name: string;
   release_date: string;
   release_date_precision: string;
@@ -70,7 +70,7 @@ type External_Ids = {
 };
 
 type SongObj = {
-  song_details: object;
+  song_details: Song;
   song_audio: HTMLAudioElement | null;
 };
 

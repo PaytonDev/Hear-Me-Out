@@ -4,8 +4,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface NowPlayingState {
   currentSong: SongObj;
-  currentArtist: Artist | {};
-  currentAlbum: Album | {};
+  currentArtist: Artist;
+  currentAlbum: Album;
   isPlaying: boolean;
 }
 
@@ -23,7 +23,7 @@ const nowPlayingSlice = createSlice({
   name: "nowPlaying",
   initialState,
   reducers: {
-    selectedSong: (state, action: PayloadAction<any>) => {
+    setSelectedSong: (state, action: PayloadAction<any>) => {
       state.currentSong = action.payload;
     },
     playSong: (state, action: PayloadAction<any>) => {
@@ -35,11 +35,15 @@ const nowPlayingSlice = createSlice({
       state.currentSong.song_audio?.pause();
       state.isPlaying = false;
     },
-    selectedAlbum: (state, action: PayloadAction<any>) => {
+    setSelectedAlbum: (state, action: PayloadAction<any>) => {
       state.currentAlbum = action.payload;
+    },
+    setSelectedArtist: (state, action: PayloadAction<any>) => {
+      state.currentArtist = action.payload;
     },
   },
 });
 
-export const { selectedSong, playSong, pauseSong } = nowPlayingSlice.actions;
+export const { setSelectedSong, playSong, pauseSong, setSelectedAlbum, setSelectedArtist } =
+  nowPlayingSlice.actions;
 export default nowPlayingSlice.reducer;

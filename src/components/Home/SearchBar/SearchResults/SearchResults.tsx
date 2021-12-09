@@ -1,8 +1,12 @@
 import { Box, Grid, Fade, Paper, Link } from "@material-ui/core";
 import { Person, Album, MusicNote } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../../../../app/hooks";
-import { playSong } from "../../../../features/now-playing/now-playing-slice";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import {
+  playSong,
+  setSelectedAlbum,
+  setSelectedArtist,
+} from "../../../../features/now-playing/now-playing-slice";
 import { useGetArtistQuery } from "../../../../features/now-playing/now-playing-api";
 import AlbumSection from "../../AlbumSection/AlbumSection";
 import ArtistSection from "../../ArtistSection/ArtistSection";
@@ -12,32 +16,24 @@ type SearchResultsProps = {
   artists: Artist[];
   albums: Album[];
   songs: Song[];
-  currentSong: any;
-  handlePlaySong: any;
   query: string;
-  pauseButtonView: boolean;
-  playButtonView: boolean;
-  nowPlaying: Song | undefined;
-  setNowPlaying: React.Dispatch<React.SetStateAction<Song | undefined>>;
 };
 
 export default function SearchResults(props: SearchResultsProps) {
-  const [currentAlbum, setCurrentAlbum] = useState<any>();
-  const [currentArtist, setCurrentArtist] = useState<any>();
   const [albumVisible, setAlbumVisible] = useState(false);
   const [artistVisible, setArtistVisible] = useState(false);
 
-  const { data: artistData, isLoading } = useGetArtistQuery(currentAlbum.artists[0].id);
+  // const currentAlbum = useAppSelector((state) => state.musicPlayer.currentAlbum)
+  // const { data: artistData, isLoading } = useGetArtistQuery(currentAlbum.artists[0].id);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (!currentAlbum) return;
-    async function getArtistFromAlbum() {
-      let artist = artistData;
-      setCurrentArtist(artist);
-    }
-    getArtistFromAlbum();
-  }, [currentAlbum, artistData]);
+  // useEffect(() => {
+  //   if (!currentAlbum.artists) return;
+  //   async function getArtistFromAlbum() {
+  //     dispatch(setSelectedArtist(artistData))
+  //   }
+  //   getArtistFromAlbum();
+  // }, [currentAlbum, artistData, dispatch]);
 
   const makeAlbumVisible = () => {
     setAlbumVisible(true);
@@ -59,7 +55,7 @@ export default function SearchResults(props: SearchResultsProps) {
         className="clickable"
         onClick={() => {
           makeArtistVisible();
-          setCurrentArtist(artist);
+          dispatch(setSelectedArtist(artist));
         }}
       >
         {artist.name}
@@ -75,7 +71,7 @@ export default function SearchResults(props: SearchResultsProps) {
         className="clickable"
         onClick={() => {
           makeAlbumVisible();
-          setCurrentAlbum(album);
+          dispatch(setSelectedAlbum(album));
         }}
       >
         {album.name}
@@ -106,63 +102,43 @@ export default function SearchResults(props: SearchResultsProps) {
 
   return (
     <Box>
-      {isLoading ? null : (
-        <>
-          <Fade in={props.query ? true : false} timeout={1000}>
-            <Paper className="searchResults-box">
-              <Grid
-                container
-                justifyContent="space-between"
-                className="searchResults-grid-container"
-                style={props.query ? { display: "flex" } : { display: "none" }}
-              >
-                <Grid item xs={4}>
-                  <Box className="searchResults-links-box">
-                    <small>Artist</small>
-                    <ul>{listArtists}</ul>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}>
-                  <Box className="searchResults-links-box">
-                    <small>Albums</small>
-                    <ul>{listAlbums}</ul>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}>
-                  <Box className="searchResults-links-box">
-                    <small>Songs</small>
-                    <ul>{listSongs}</ul>
-                  </Box>
-                </Grid>
+      <>
+        <Fade in={!!props.query} timeout={1000}>
+          <Paper className="searchResults-box">
+            <Grid
+              container
+              justifyContent="space-between"
+              className="searchResults-grid-container"
+              style={props.query ? { display: "flex" } : { display: "none" }}
+            >
+              <Grid item xs={4}>
+                <Box className="searchResults-links-box">
+                  <small>Artist</small>
+                  <ul>{listArtists}</ul>
+                </Box>
               </Grid>
-            </Paper>
-          </Fade>
-          <Box style={albumVisible ? { display: "block" } : { display: "none" }}>
-            <AlbumSection
-              currentAlbum={currentAlbum}
-              currentArtist={currentArtist}
-              handleShowArtist={makeArtistVisible}
-              handleCurrentArtist={setCurrentArtist}
-              pauseButtonView={props.pauseButtonView}
-              playButtonView={props.playButtonView}
-              nowPlaying={props.nowPlaying}
-              setNowPlaying={props.setNowPlaying}
-            />
-          </Box>
-          <Box style={artistVisible ? { display: "block" } : { display: "none" }}>
-            <ArtistSection
-              currentArtist={currentArtist}
-              currentAlbum={currentAlbum}
-              handleShowAlbum={makeAlbumVisible}
-              handleCurrentAlbum={setCurrentAlbum}
-              pauseButtonView={props.pauseButtonView}
-              playButtonView={props.playButtonView}
-              nowPlaying={props.nowPlaying}
-              setNowPlaying={props.setNowPlaying}
-            />
-          </Box>
-        </>
-      )}
+              <Grid item xs={4}>
+                <Box className="searchResults-links-box">
+                  <small>Albums</small>
+                  <ul>{listAlbums}</ul>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box className="searchResults-links-box">
+                  <small>Songs</small>
+                  <ul>{listSongs}</ul>
+                </Box>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Fade>
+        <Box style={albumVisible ? { display: "block" } : { display: "none" }}>
+          <AlbumSection handleShowArtist={makeArtistVisible} />
+        </Box>
+        <Box style={artistVisible ? { display: "block" } : { display: "none" }}>
+          <ArtistSection handleShowAlbum={makeAlbumVisible} />
+        </Box>
+      </>
     </Box>
   );
 }

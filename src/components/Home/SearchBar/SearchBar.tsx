@@ -14,17 +14,7 @@ On load the Searchbar component uses the getSearchResults API function, user que
  as the query changes.
 
 */
-
-export type SearchBarProps = {
-  currentSong: HTMLAudioElement | undefined;
-  handlePlaySong: any;
-  pauseButtonView: boolean;
-  playButtonView: boolean;
-  nowPlaying: Song | undefined;
-  setNowPlaying: React.Dispatch<React.SetStateAction<Song | undefined>>;
-};
-
-export default function SearchBar(props: SearchBarProps) {
+export default function SearchBar() {
   const classes = styles();
 
   const [query, setQuery] = useState("");
@@ -70,18 +60,7 @@ export default function SearchBar(props: SearchBarProps) {
       </FormControl>
 
       {isLoading ? null : (
-        <SearchResults
-          artists={artists}
-          albums={albums}
-          songs={songs}
-          currentSong={props.currentSong}
-          query={query}
-          handlePlaySong={props.handlePlaySong}
-          pauseButtonView={props.pauseButtonView}
-          playButtonView={props.playButtonView}
-          nowPlaying={props.nowPlaying}
-          setNowPlaying={props.setNowPlaying}
-        />
+        <SearchResults artists={artists} albums={albums} songs={songs} query={query} />
       )}
     </>
   );

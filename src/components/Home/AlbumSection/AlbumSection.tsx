@@ -18,39 +18,37 @@ import {
   Typography,
   Fade,
 } from "@material-ui/core";
-import { useState, useEffect, SetStateAction } from "react";
-import { getAlbumSongs } from "../../../controller/API";
+import { useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useGetAlbumSongsQuery } from "../../../features/now-playing/now-playing-api";
+import { setSelectedArtist, playSong } from "../../../features/now-playing/now-playing-slice";
 import { styles } from "./styles";
 
 export type AlbumSectionProps = {
-  currentAlbum: any;
-  currentArtist: any;
-  token: string | undefined;
-  handleCurrentArtist: React.Dispatch<SetStateAction<any>>;
   handleShowArtist: () => void;
-  playSong: any;
-  pauseButtonView: boolean;
-  playButtonView: boolean;
-  nowPlaying: Song | undefined;
-  setNowPlaying: React.Dispatch<React.SetStateAction<Song | undefined>>;
 };
 
+// Finish untangling album, music, and song states.
 const AlbumSection = (props: AlbumSectionProps) => {
   const [albumSongs, setAlbumSongs] = useState<any>([]);
   const classes = styles();
 
+  const currentArtist = useAppSelector((state) => state.musicPlayer.currentArtist);
+  const currentAlbum = useAppSelector((state) => state.musicPlayer.currentAlbum);
+  const { data, isLoading } = useGetAlbumSongsQuery(currentAlbum.id);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     async function getCurrentAlbumSongs() {
-      if (!props.currentAlbum) return;
-      let res = await getAlbumSongs(props.currentAlbum.id, props.token);
-      setAlbumSongs(res.data.items);
+      if (!currentAlbum) return;
+      setAlbumSongs(data.items);
     }
     getCurrentAlbumSongs();
-  }, [props.currentAlbum, props.token]);
+  }, [currentAlbum, data]);
 
-  const goToArtist = (artist: any) => {
-    if (props.currentAlbum) {
-      props.handleCurrentArtist(artist);
+  const goToArtist = (artist: Artist) => {
+    if (currentAlbum) {
+      dispatch(setSelectedArtist(artist));
       props.handleShowArtist();
     }
   };
@@ -65,112 +63,111 @@ const AlbumSection = (props: AlbumSectionProps) => {
 
   return (
     <Paper className={classes.albumSectionContainer}>
-      <Fade in={!!props.currentAlbum} timeout={1000}>
-        <Grid container>
-          <Grid
-            container
-            item
-            alignItems="center"
-            justifyContent="space-evenly"
-            className={classes.albumSectionContainer}
-          >
-            <Grid item xs={3}>
-              <Box>
-                <img
-                  className={classes.albumImageStyles}
-                  src={props.currentAlbum ? props.currentAlbum.images[0].url : ""}
-                  alt={`${props.currentAlbum ? props.currentAlbum.name : ""} album cover`}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={3}>
-              <Box>
-                <p className={classes.albumTitleStyles}>
-                  {props.currentAlbum ? props.currentAlbum.name : "Album Name"}
-                </p>
+      {isLoading ? null : (
+        <Fade in={!!currentAlbum.artists} timeout={1000}>
+          <Grid container>
+            <Grid
+              container
+              item
+              alignItems="center"
+              justifyContent="space-evenly"
+              className={classes.albumSectionContainer}
+            >
+              <Grid item xs={3}>
+                <Box>
+                  <img
+                    className={classes.albumImageStyles}
+                    src={currentAlbum ? currentAlbum.images[0].url : ""}
+                    alt={`${currentAlbum ? currentAlbum.name : ""} album cover`}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={3}>
+                <Box>
+                  <p className={classes.albumTitleStyles}>
+                    {currentAlbum ? currentAlbum.name : "Album Name"}
+                  </p>
 
-                {/* Artist Name Link */}
-                <p
-                  onClick={() => goToArtist(props.currentArtist)}
-                  className={classes.albumTitleArtistStyles}
-                >
-                  {props.currentAlbum ? `by ${props.currentAlbum.artists[0].name}` : "Artist Name"}
-                </p>
-              </Box>
+                  {/* Artist Name Link */}
+                  <p
+                    onClick={() => goToArtist(currentArtist)}
+                    className={classes.albumTitleArtistStyles}
+                  >
+                    {currentAlbum ? `by ${currentAlbum.artists[0].name}` : "Artist Name"}
+                  </p>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
-          <TableContainer component={Paper} className={classes.tableContainer}>
-            <Table aria-label="album info table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left">
-                    <Typography variant="body1" component="header">
-                      Song
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Typography variant="body1" component="header">
-                      Artist
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Typography variant="body1" component="header">
-                      Time
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {props.currentAlbum
-                  ? albumSongs.map((song: any, idx: number) => (
-                      <TableRow key={idx}>
-                        <TableCell className={classes.songTableCell}>
-                          <Grid container alignContent="center">
-                            <img
-                              className={classes.songImageStyles}
-                              src={props.currentAlbum ? props.currentAlbum.images[2].url : ""}
-                              alt={`${
-                                props.currentAlbum ? props.currentAlbum.name : ""
-                              } album cover`}
-                            />
+            <TableContainer component={Paper} className={classes.tableContainer}>
+              <Table aria-label="album info table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left">
+                      <Typography variant="body1" component="header">
+                        Song
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Typography variant="body1" component="header">
+                        Artist
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Typography variant="body1" component="header">
+                        Time
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {currentAlbum
+                    ? albumSongs.map((song: any, idx: number) => (
+                        <TableRow key={idx}>
+                          <TableCell className={classes.songTableCell}>
+                            <Grid container alignContent="center">
+                              <img
+                                className={classes.songImageStyles}
+                                src={currentAlbum ? currentAlbum.images[2].url : ""}
+                                alt={`${currentAlbum ? currentAlbum.name : ""} album cover`}
+                              />
 
-                            {/* Song Link */}
-                            <Grid
-                              container
-                              item
-                              alignContent="center"
-                              onClick={() => {
-                                props.playSong(song.id);
-                                props.setNowPlaying(song);
-                              }}
-                              className={classes.songNameStyles}
-                            >
-                              <Link>{song.name}</Link>
+                              {/* Song Link */}
+                              <Grid
+                                container
+                                item
+                                alignContent="center"
+                                onClick={() => {
+                                  dispatch(playSong(song.id));
+                                }}
+                                className={classes.songNameStyles}
+                              >
+                                <Link>{song.name}</Link>
+                              </Grid>
                             </Grid>
-                          </Grid>
-                        </TableCell>
-                        <TableCell>
-                          {/* Artist Link */}
-                          <Link
-                            onClick={() => goToArtist(props.currentArtist)}
-                            className={classes.songInfoStyles}
-                          >
-                            {song.artists[0].name}
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <small className={classes.songInfoStyles}>
-                            {convertSongTime(song.duration_ms)}
-                          </small>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  : "Album Songs"}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid>
-      </Fade>
+                          </TableCell>
+                          <TableCell>
+                            {/* Artist Link */}
+                            <Link
+                              onClick={() => goToArtist(currentArtist)}
+                              className={classes.songInfoStyles}
+                            >
+                              {song.artists[0].name}
+                            </Link>
+                          </TableCell>
+                          <TableCell>
+                            <small className={classes.songInfoStyles}>
+                              {convertSongTime(song.duration_ms)}
+                            </small>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    : "Album Songs"}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Fade>
+      )}
     </Paper>
   );
 };

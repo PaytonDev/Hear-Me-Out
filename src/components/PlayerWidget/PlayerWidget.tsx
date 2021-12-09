@@ -4,15 +4,10 @@ import PauseCircleOutline from "@material-ui/icons/PauseCircleOutline";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutlineOutlined";
 import { styles } from "./styles";
 import "./PlayerWidget.css";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { pauseSong, playSong } from "../../features/now-playing/now-playing-slice";
 
 type PlayerWidgetProps = {
-  currentSong: any;
-  handlePlaySong: any;
-  handlePauseSong: any;
-  pauseButtonView: boolean;
-  playButtonView: boolean;
-  nowPlaying: Song | undefined;
-  setNowPlaying: React.Dispatch<React.SetStateAction<Song | undefined>>;
   openRecentlyPlayed: boolean;
   setOpenRecentlyPlayed: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -26,6 +21,10 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
   const handleShowQueue = () => setShowQueue(true);
   const handleCloseQueue = () => setShowQueue(false);
 
+  const currentSong = useAppSelector((store) => store.musicPlayer);
+
+  const dispatch = useAppDispatch();
+
   const classes = styles();
 
   return (
@@ -33,7 +32,7 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
       container
       className="widget-container"
       alignItems="center"
-      style={props.currentSong ? { display: "flex" } : { display: "none" }}
+      style={currentSong ? { display: "flex" } : { display: "none" }}
     >
       <Grid container item xs={12} justifyContent="space-between" alignContent="center">
         <Grid item container xs={3} alignContent="center" justifyContent="center">
@@ -61,19 +60,25 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
 
           <Grid item xs={1}>
             <PauseCircleOutline
-              onClick={() => props.handlePauseSong(props.currentSong)}
+              onClick={() => dispatch(pauseSong())}
               style={
-                props.pauseButtonView ? { fontSize: 40, margin: "5px 0" } : { display: "none" }
+                currentSong.isPlaying === true
+                  ? { fontSize: 40, margin: "5px 0" }
+                  : { display: "none" }
               }
             />
             <PlayCircleOutline
-              onClick={() => props.handlePlaySong(props.currentSong)}
-              style={props.playButtonView ? { fontSize: 40, margin: "5px 0" } : { display: "none" }}
+              onClick={() => dispatch(playSong(currentSong.currentSong.song_audio))}
+              style={
+                currentSong.isPlaying === false
+                  ? { fontSize: 40, margin: "5px 0" }
+                  : { display: "none" }
+              }
             />
           </Grid>
 
           <Grid item className="scroll-left" xs={4}>
-            <p>{props.nowPlaying ? props.nowPlaying.name : null}</p>
+            <p>{currentSong ? currentSong.currentSong.song_details.name : null}</p>
           </Grid>
         </Grid>
         <Grid item container xs={3} alignContent="center" justifyContent="center">
