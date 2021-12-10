@@ -22,6 +22,7 @@
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "immutable": "^4.0.0",
     "mongoose": "^5.13.3",
@@ -42,11 +43,13 @@
   "optionalDependencies": {
     "fsevents": "2.3.2"
   },
+  "proxy": "http://localhost:4000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node-env-run server --exec nodemon"
   },
   "eslintConfig": {
     "extends": [
@@ -79,8 +82,10 @@
     "@types/spotify-web-api-node": "^5.0.3",
     "@types/styled-components": "^5.1.11",
     "concurrently": "^6.2.0",
+    "node-env-run": "^4.0.2",
     "nodemon": "^2.0.12",
-    "ts-node": "^10.2.1",
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^10.4.0",
     "tslib": "^1.14.1"
   },
   "babel": {

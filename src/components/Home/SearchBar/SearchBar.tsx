@@ -23,9 +23,11 @@ export default function SearchBar() {
   const [songs, setSongs] = useState([]);
 
   const { data, isLoading } = useGetSearchResultsQuery(query);
+  console.log(data);
 
   // Loading token as
   useEffect(() => {
+    if (isLoading) return;
     if (!query) return;
 
     const handleChange = async (query: string) => {

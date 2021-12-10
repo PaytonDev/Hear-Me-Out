@@ -8,19 +8,10 @@ import { theme } from "./theme";
 export const code = new URLSearchParams(window.location.search).get("code");
 
 function App() {
-  const storeCode = () => {
-    if (code) {
-      window.localStorage.setItem("yourCode", `${code}`);
-      let yourCode = localStorage.getItem("yourCode");
-      return yourCode;
-    }
-    return;
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">{storeCode() ? <Home code={code} /> : <LoginPage />}</div>
+      <div className="App">{code ? <Home code={code} /> : <LoginPage />}</div>
     </ThemeProvider>
   );
 }

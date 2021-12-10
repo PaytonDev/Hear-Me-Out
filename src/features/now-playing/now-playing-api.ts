@@ -7,11 +7,12 @@ const baseQuery = fetchBaseQuery({
   baseUrl: SPOTIFY_BASE_URL,
   prepareHeaders: (headers: Headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
+    console.log("token", token);
 
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
-
+    console.log("headers", headers);
     return headers;
   },
 });
