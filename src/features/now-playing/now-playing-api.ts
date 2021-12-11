@@ -7,12 +7,9 @@ const baseQuery = fetchBaseQuery({
   baseUrl: SPOTIFY_BASE_URL,
   prepareHeaders: (headers: Headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
-    console.log("token", token);
-
     if (token) {
-      headers.set("authorization", `Bearer ${token}`);
+      headers.set("Authorization", `Bearer ${token}`);
     }
-    console.log("headers", headers);
     return headers;
   },
 });
@@ -21,7 +18,8 @@ export const spotifyApi = createApi({
   baseQuery: baseQuery,
   endpoints: (builder) => ({
     getSearchResults: builder.query({
-      query: (searchQuery: string) => `search?q=${searchQuery}&type=artist,album,track&limit=4`,
+      query: (searchQuery: string) =>
+        `search?q=${searchQuery || "a"}&type=artist,album,track&limit=4`,
     }),
     getAlbum: builder.query({
       query: (id: string) => `albums/${id}`,
@@ -36,7 +34,7 @@ export const spotifyApi = createApi({
       query: (id: string) => `artists/${id}/top-tracks`,
     }),
     getArtistAlbums: builder.query({
-      query: (id: string) => `albums/${id}/tracks`,
+      query: (id: string) => `artists/${id}/albums`,
     }),
     getSong: builder.query({
       query: (id: string) => `tracks/${id}`,

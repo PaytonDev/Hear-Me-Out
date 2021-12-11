@@ -7,6 +7,7 @@ import {
   useGetArtistAlbumsQuery,
   useGetArtistTopSongsQuery,
 } from "../../../features/now-playing/now-playing-api";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
 import { playSong, setSelectedAlbum } from "../../../features/now-playing/now-playing-slice";
 
 type ArtistSectionProps = {
@@ -38,18 +39,26 @@ const ArtistSection = (props: ArtistSectionProps) => {
   const classes = styles(seeAllOpen);
 
   const currentArtist = useAppSelector((state) => state.musicPlayer.currentArtist);
-  const { data: albums, isLoading: albumsLoading } = useGetArtistAlbumsQuery(currentArtist.id);
-  const { data: songs, isLoading: songsLoading } = useGetArtistTopSongsQuery(currentArtist.id);
+  const { data: albums, isLoading: albumsLoading } = useGetArtistAlbumsQuery(
+    currentArtist.id ?? skipToken
+  );
+  const { data: songs, isLoading: songsLoading } = useGetArtistTopSongsQuery(
+    currentArtist.id ?? skipToken
+  );
   const dispatch = useAppDispatch();
+
+  console.log(songs);
+  console.log(currentArtist);
 
   useEffect(() => {
     async function getCurrentArtistMusic() {
-      if (!currentArtist) return;
+      if (!currentArtist.id) return;
+      if (songsLoading || albumsLoading) return;
       setArtistAlbums(albums.items);
       setArtistTopSongs(songs.tracks);
     }
     getCurrentArtistMusic();
-  }, [currentArtist, albums, songs]);
+  }, [currentArtist, albums, songs, albumsLoading, songsLoading]);
 
   const convertSongTime = (milliseconds: number) => {
     let min = Math.floor(milliseconds / 60000);
@@ -75,8 +84,8 @@ const ArtistSection = (props: ArtistSectionProps) => {
           >
             <Grid item xs={6}>
               <img
-                src={currentArtist ? currentArtist.images[0].url : "Artist Image"}
-                alt={`${currentArtist ? currentArtist.name : ""} avatar`}
+                src={currentArtist.id ? currentArtist.images[0].url : "Artist Image"}
+                alt={`${currentArtist.id ? currentArtist.name : ""} avatar`}
                 style={{ maxHeight: 250, borderRadius: "50%" }}
               />
               <p style={{ fontSize: 54, marginTop: 10, marginBottom: 0 }}>
@@ -88,15 +97,15 @@ const ArtistSection = (props: ArtistSectionProps) => {
               <Grid item xs={12}>
                 <header>Top Tracks</header>
                 <ul>
-                  {currentArtist
+                  {currentArtist.id && songs
                     ? artistTopSongs.slice(0, 5).map((song: any, idx: number) => (
                         <li style={cssStyles.songLiStyles} key={idx}>
                           <Grid container item alignItems="center">
                             <Grid container alignItems="center" item xs={6}>
                               <img
                                 style={cssStyles.songImageStyles}
-                                src={currentArtist ? song.album.images[2].url : ""}
-                                alt={`${currentArtist ? song.album.name : ""} album cover`}
+                                src={currentArtist.id ? song.album.images[2].url : ""}
+                                alt={`${currentArtist.id ? song.album.name : ""} album cover`}
                               />
                               <Link
                                 onClick={() => {
@@ -124,7 +133,7 @@ const ArtistSection = (props: ArtistSectionProps) => {
                           </Grid>
                         </li>
                       ))
-                    : "Album Songs"}
+                    : "Top Songs"}
                 </ul>
               </Grid>
             </Grid>
@@ -133,7 +142,7 @@ const ArtistSection = (props: ArtistSectionProps) => {
                 <p>Albums</p>
                 <p onClick={seeAllToggle}>See All</p>
               </Grid>
-              {currentArtist
+              {currentArtist.id
                 ? artistAlbums.map((album: any, idx: number) => (
                     <Grid item sm={4} md={3} lg={2} key={idx}>
                       <Box

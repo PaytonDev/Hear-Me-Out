@@ -3,54 +3,25 @@ import axios from "axios";
 
 // Function used to return Access Token needed to make all other API Calls.
 
-const useAuth = (code: string | null) => {
+const useAuth = () => {
   const [accessToken, setAccessToken] = useState<string>();
   const [refreshToken] = useState<string>();
   const [expiresIn, setExpiresIn] = useState<number>();
-  const data = {
-    client_id: process.env.CLIENT_ID || "",
-    client_secret: process.env.CLIENT_SECRET || "",
-    redirect_URI: "http://localhost:3000/home",
-    scope: "streaming user-read-email user-read-private",
-  };
+
+  const code = new URLSearchParams(window.location.search).get("code");
 
   useEffect(() => {
     if (!code) return;
-		console.log(code)
-    let authOptions = {
-      url: "https://accounts.spotify.com/api/token",
-      form: {
-        code: code,
-        redirect_uri: "http://localhost:3000",
-        grant_type: "authorization_code",
-      },
-      headers: {
-        Authorization:
-          "Basic " + Buffer.from(data.client_id + ":" + data.client_secret).toString("base64"),
-      },
-      json: true,
-    };
 
-		console.log(data.client_id)
-
-    axios({
-        url: authOptions.url,
-				method: "POST",
-				data: `code=${code}&redirect_uri=http://localhost:3000&grant_type=authorization_code`,
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-					"Authorization": authOptions.headers.Authorization,
-				},
-		})
+    axios.post("http://localhost:4000/login", { code })
       .then((res) => {
-				console.log(res.data)
         window.history.pushState({}, "", "/");
         setAccessToken(res.data.token);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [code, data.client_id, data.client_secret]);
+  }, [code]);
 
   useEffect(() => {
     if (!refreshToken || !expiresIn) return;

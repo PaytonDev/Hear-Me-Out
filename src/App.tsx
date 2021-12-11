@@ -1,17 +1,31 @@
+import { useEffect } from "react";
+import SpotifyWebApi from "spotify-web-api-node";
 import Home from "./components/Home/Home";
 import "./App.css";
 import LoginPage from "./components/Login/LoginPage";
 import { ThemeProvider } from "@material-ui/styles";
 import { CssBaseline } from "@material-ui/core";
+import useAuth from "./controller/useAuth";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
+import { setToken } from "./features/auth/auth-slice";
 import { theme } from "./theme";
 
 export const code = new URLSearchParams(window.location.search).get("code");
 
 function App() {
+  const token = useAuth();
+  const dispatch = useAppDispatch();
+  const storeToken = useAppSelector((store) => store.auth.token);
+
+  useEffect(() => {
+    if (!token) return;
+    dispatch(setToken(token));
+  }, [token, dispatch]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">{code ? <Home code={code} /> : <LoginPage />}</div>
+      <div className="App">{storeToken ? <Home token={token} /> : <LoginPage />}</div>
     </ThemeProvider>
   );
 }

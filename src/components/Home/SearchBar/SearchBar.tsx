@@ -22,25 +22,26 @@ export default function SearchBar() {
   const [artists, setArtists] = useState([]);
   const [songs, setSongs] = useState([]);
 
-  const { data, isLoading } = useGetSearchResultsQuery(query);
-  console.log(data);
+  const { data, isLoading, error } = useGetSearchResultsQuery(query, {
+    skip: !!query,
+  });
 
-  // Loading token as
   useEffect(() => {
-    if (isLoading) return;
     if (!query) return;
 
     const handleChange = async (query: string) => {
       if (query === "") {
         return;
       }
-      setAlbums(data.albums.items);
-      setArtists(data.artists.items);
-      setSongs(data.tracks.items);
+      if (!isLoading) {
+        setAlbums(data.albums.items);
+        setArtists(data.artists.items);
+        setSongs(data.tracks.items);
+      }
     };
 
     handleChange(query);
-  }, [query, data]);
+  }, [query, data, isLoading]);
 
   return (
     <>
@@ -61,7 +62,11 @@ export default function SearchBar() {
         />
       </FormControl>
 
-      {isLoading ? null : (
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : error ? (
+        <h1>There was a problem</h1>
+      ) : (
         <SearchResults artists={artists} albums={albums} songs={songs} query={query} />
       )}
     </>

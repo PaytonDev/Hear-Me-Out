@@ -22,6 +22,7 @@ import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { useGetAlbumSongsQuery } from "../../../features/now-playing/now-playing-api";
 import { setSelectedArtist, playSong } from "../../../features/now-playing/now-playing-slice";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
 import { styles } from "./styles";
 
 export type AlbumSectionProps = {
@@ -35,12 +36,12 @@ const AlbumSection = (props: AlbumSectionProps) => {
 
   const currentArtist = useAppSelector((state) => state.musicPlayer.currentArtist);
   const currentAlbum = useAppSelector((state) => state.musicPlayer.currentAlbum);
-  const { data, isLoading } = useGetAlbumSongsQuery(currentAlbum.id);
+  const { data, isLoading } = useGetAlbumSongsQuery(currentAlbum.id ?? skipToken);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     async function getCurrentAlbumSongs() {
-      if (!currentAlbum) return;
+      if (!currentAlbum.id) return;
       setAlbumSongs(data.items);
     }
     getCurrentAlbumSongs();
@@ -77,15 +78,15 @@ const AlbumSection = (props: AlbumSectionProps) => {
                 <Box>
                   <img
                     className={classes.albumImageStyles}
-                    src={currentAlbum ? currentAlbum.images[0].url : ""}
-                    alt={`${currentAlbum ? currentAlbum.name : ""} album cover`}
+                    src={currentAlbum.id ? currentAlbum.images[0].url : ""}
+                    alt={`${currentAlbum.id ? currentAlbum.name : ""} album cover`}
                   />
                 </Box>
               </Grid>
               <Grid item xs={3}>
                 <Box>
                   <p className={classes.albumTitleStyles}>
-                    {currentAlbum ? currentAlbum.name : "Album Name"}
+                    {currentAlbum.id ? currentAlbum.name : "Album Name"}
                   </p>
 
                   {/* Artist Name Link */}
@@ -93,7 +94,7 @@ const AlbumSection = (props: AlbumSectionProps) => {
                     onClick={() => goToArtist(currentArtist)}
                     className={classes.albumTitleArtistStyles}
                   >
-                    {currentAlbum ? `by ${currentAlbum.artists[0].name}` : "Artist Name"}
+                    {currentAlbum.id ? `by ${currentAlbum.artists[0].name}` : "Artist Name"}
                   </p>
                 </Box>
               </Grid>
@@ -120,15 +121,15 @@ const AlbumSection = (props: AlbumSectionProps) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {currentAlbum
+                  {currentAlbum.id
                     ? albumSongs.map((song: any, idx: number) => (
                         <TableRow key={idx}>
                           <TableCell className={classes.songTableCell}>
                             <Grid container alignContent="center">
                               <img
                                 className={classes.songImageStyles}
-                                src={currentAlbum ? currentAlbum.images[2].url : ""}
-                                alt={`${currentAlbum ? currentAlbum.name : ""} album cover`}
+                                src={currentAlbum.id ? currentAlbum.images[2].url : ""}
+                                alt={`${currentAlbum.id ? currentAlbum.name : ""} album cover`}
                               />
 
                               {/* Song Link */}
