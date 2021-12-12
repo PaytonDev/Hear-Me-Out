@@ -2,7 +2,7 @@ import { Box, Grid, Paper, Link, Fade } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import cssStyles from "./styles";
 import { makeStyles } from "@material-ui/core/styles";
-import { useAppSelector, useAppDispatch } from "../../../app/hooks";
+import { useAppSelector, useAppDispatch } from "../../../state/hooks";
 import {
   useGetArtistAlbumsQuery,
   useGetArtistTopSongsQuery,
@@ -42,9 +42,9 @@ const ArtistSection = (props: ArtistSectionProps) => {
   const { data: albums, isLoading: albumsLoading } = useGetArtistAlbumsQuery(
     currentArtist.id ?? skipToken
   );
-  const { data: songs, isLoading: songsLoading } = useGetArtistTopSongsQuery(
-    currentArtist.id ?? skipToken
-  );
+  const { data: songs, isLoading: songsLoading } = useGetArtistTopSongsQuery(currentArtist.id, {
+    skip: albumsLoading,
+  });
   const dispatch = useAppDispatch();
 
   console.log(songs);
@@ -55,6 +55,8 @@ const ArtistSection = (props: ArtistSectionProps) => {
       if (!currentArtist.id) return;
       if (songsLoading || albumsLoading) return;
       setArtistAlbums(albums.items);
+      console.log("inside effect songs", songs);
+      console.log("inside effect albums", albums);
       setArtistTopSongs(songs.tracks);
     }
     getCurrentArtistMusic();

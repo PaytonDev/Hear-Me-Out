@@ -4,7 +4,7 @@ import PauseCircleOutline from "@material-ui/icons/PauseCircleOutline";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutlineOutlined";
 import { styles } from "./styles";
 import "./PlayerWidget.css";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { pauseSong, playSong } from "../../features/now-playing/now-playing-slice";
 
 type PlayerWidgetProps = {

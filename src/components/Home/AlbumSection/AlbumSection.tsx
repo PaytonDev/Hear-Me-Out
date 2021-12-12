@@ -19,7 +19,7 @@ import {
   Fade,
 } from "@material-ui/core";
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../state/hooks";
 import { useGetAlbumSongsQuery } from "../../../features/now-playing/now-playing-api";
 import { setSelectedArtist, playSong } from "../../../features/now-playing/now-playing-slice";
 import { skipToken } from "@reduxjs/toolkit/dist/query";

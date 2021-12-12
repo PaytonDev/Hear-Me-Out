@@ -1,13 +1,12 @@
 import { Box, Grid, Fade, Paper, Link } from "@material-ui/core";
 import { Person, Album, MusicNote } from "@material-ui/icons";
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { useState } from "react";
+import { useAppDispatch } from "../../../../state/hooks";
 import {
   playSong,
   setSelectedAlbum,
   setSelectedArtist,
 } from "../../../../features/now-playing/now-playing-slice";
-import { useGetArtistQuery } from "../../../../features/now-playing/now-playing-api";
 import AlbumSection from "../../AlbumSection/AlbumSection";
 import ArtistSection from "../../ArtistSection/ArtistSection";
 import "./SearchResults.css";
@@ -23,17 +22,7 @@ export default function SearchResults(props: SearchResultsProps) {
   const [albumVisible, setAlbumVisible] = useState(false);
   const [artistVisible, setArtistVisible] = useState(false);
 
-  // const currentAlbum = useAppSelector((state) => state.musicPlayer.currentAlbum)
-  // const { data: artistData, isLoading } = useGetArtistQuery(currentAlbum.artists[0].id);
   const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   if (!currentAlbum.artists) return;
-  //   async function getArtistFromAlbum() {
-  //     dispatch(setSelectedArtist(artistData))
-  //   }
-  //   getArtistFromAlbum();
-  // }, [currentAlbum, artistData, dispatch]);
 
   const makeAlbumVisible = () => {
     setAlbumVisible(true);
