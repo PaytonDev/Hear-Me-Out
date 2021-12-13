@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import SpotifyWebApi from "spotify-web-api-node";
 import Home from "./components/Home/Home";
 import "./App.css";
 import LoginPage from "./components/Login/LoginPage";

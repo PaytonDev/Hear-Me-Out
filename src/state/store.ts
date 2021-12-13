@@ -13,7 +13,13 @@ export const store = configureStore({
     auth: authReducer,
     [spotifyApi.reducerPath]: spotifyApi.reducer,
   },
-  middleware: (getDefaultMiddleWare) => getDefaultMiddleWare().concat(spotifyApi.middleware),
+  middleware: (getDefaultMiddleWare) =>
+    getDefaultMiddleWare({
+      serializableCheck: {
+        ignoredActions: ["nowPlaying/playSong", "nowPlaying/pauseSong"],
+        ignoredPaths: ["musicPlayer.currentSong.song_audio"],
+      },
+    }).concat(spotifyApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

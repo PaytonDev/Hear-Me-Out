@@ -27,6 +27,9 @@ const nowPlayingSlice = createSlice({
       state.currentSong = action.payload;
     },
     playSong: (state, action: PayloadAction<any>) => {
+      if (state.currentSong.song_audio) {
+        state.currentSong.song_audio.pause();
+      }
       state.currentSong = action.payload;
       state.currentSong.song_audio?.play();
       state.isPlaying = true;

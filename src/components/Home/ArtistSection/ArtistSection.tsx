@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Link, Fade } from "@material-ui/core";
+import { Box, Grid, Paper, Link, Fade, Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import cssStyles from "./styles";
 import { makeStyles } from "@material-ui/core/styles";
@@ -42,21 +42,14 @@ const ArtistSection = (props: ArtistSectionProps) => {
   const { data: albums, isLoading: albumsLoading } = useGetArtistAlbumsQuery(
     currentArtist.id ?? skipToken
   );
-  const { data: songs, isLoading: songsLoading } = useGetArtistTopSongsQuery(currentArtist.id, {
-    skip: albumsLoading,
-  });
+  const { data: songs, isLoading: songsLoading } = useGetArtistTopSongsQuery(currentArtist.id);
   const dispatch = useAppDispatch();
-
-  console.log(songs);
-  console.log(currentArtist);
 
   useEffect(() => {
     async function getCurrentArtistMusic() {
       if (!currentArtist.id) return;
       if (songsLoading || albumsLoading) return;
       setArtistAlbums(albums.items);
-      console.log("inside effect songs", songs);
-      console.log("inside effect albums", albums);
       setArtistTopSongs(songs.tracks);
     }
     getCurrentArtistMusic();
@@ -100,41 +93,45 @@ const ArtistSection = (props: ArtistSectionProps) => {
                 <header>Top Tracks</header>
                 <ul>
                   {currentArtist.id && songs
-                    ? artistTopSongs.slice(0, 5).map((song: any, idx: number) => (
-                        <li style={cssStyles.songLiStyles} key={idx}>
-                          <Grid container item alignItems="center">
-                            <Grid container alignItems="center" item xs={6}>
-                              <img
-                                style={cssStyles.songImageStyles}
-                                src={currentArtist.id ? song.album.images[2].url : ""}
-                                alt={`${currentArtist.id ? song.album.name : ""} album cover`}
-                              />
-                              <Link
-                                onClick={() => {
-                                  dispatch(playSong(song.id));
-                                }}
-                                style={cssStyles.songNameStyles}
-                              >
-                                {song.name}
-                              </Link>
-                            </Grid>
-                            <Grid item xs={3}>
-                              <Link>
+                    ? artistTopSongs.slice(0, 5).map((song: any, idx: number) => {
+                        const songObj = {
+                          song_details: song,
+                          song_audio: new Audio(song.preview_url),
+                        };
+                        return (
+                          <li style={cssStyles.songLiStyles} key={idx}>
+                            <Grid container item alignItems="center">
+                              <Grid container alignItems="center" item xs={6}>
+                                <img
+                                  style={cssStyles.songImageStyles}
+                                  src={currentArtist.id ? song.album.images[2].url : ""}
+                                  alt={`${currentArtist.id ? song.album.name : ""} album cover`}
+                                />
+                                <Link
+                                  onClick={() => {
+                                    dispatch(playSong(songObj));
+                                  }}
+                                  style={cssStyles.songNameStyles}
+                                >
+                                  {song.name}
+                                </Link>
+                              </Grid>
+                              <Grid item xs={3}>
                                 <small style={cssStyles.songInfoStyles}>
                                   {song.artists[0].name}
                                 </small>
-                              </Link>
+                              </Grid>
+                              <Grid item container xs={3} justifyContent="center">
+                                <div>
+                                  <small style={cssStyles.songInfoStyles}>
+                                    {convertSongTime(song.duration_ms)}
+                                  </small>
+                                </div>
+                              </Grid>
                             </Grid>
-                            <Grid item container xs={3} justifyContent="center">
-                              <div>
-                                <small style={cssStyles.songInfoStyles}>
-                                  {convertSongTime(song.duration_ms)}
-                                </small>
-                              </div>
-                            </Grid>
-                          </Grid>
-                        </li>
-                      ))
+                          </li>
+                        );
+                      })
                     : "Top Songs"}
                 </ul>
               </Grid>
@@ -142,7 +139,9 @@ const ArtistSection = (props: ArtistSectionProps) => {
             <Grid container item xs={12} spacing={4} justifyContent="center">
               <Grid container item xs={11} alignItems="center" justifyContent="space-between">
                 <p>Albums</p>
-                <p onClick={seeAllToggle}>See All</p>
+                <Button variant="outlined" onClick={seeAllToggle}>
+                  See All
+                </Button>
               </Grid>
               {currentArtist.id
                 ? artistAlbums.map((album: any, idx: number) => (
@@ -150,6 +149,7 @@ const ArtistSection = (props: ArtistSectionProps) => {
                       <Box
                         onClick={() => {
                           dispatch(setSelectedAlbum(album));
+                          props.handleShowAlbum();
                         }}
                       >
                         <img

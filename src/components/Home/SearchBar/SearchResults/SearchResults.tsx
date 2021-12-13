@@ -1,26 +1,46 @@
 import { Box, Grid, Fade, Paper, Link } from "@material-ui/core";
 import { Person, Album, MusicNote } from "@material-ui/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../../state/hooks";
 import {
   playSong,
   setSelectedAlbum,
   setSelectedArtist,
 } from "../../../../features/now-playing/now-playing-slice";
+import { useGetSearchResultsQuery } from "../../../../features/now-playing/now-playing-api";
 import AlbumSection from "../../AlbumSection/AlbumSection";
 import ArtistSection from "../../ArtistSection/ArtistSection";
 import "./SearchResults.css";
 
 type SearchResultsProps = {
-  artists: Artist[];
-  albums: Album[];
-  songs: Song[];
   query: string;
 };
 
 export default function SearchResults(props: SearchResultsProps) {
   const [albumVisible, setAlbumVisible] = useState(false);
   const [artistVisible, setArtistVisible] = useState(false);
+  const [albums, setAlbums] = useState<Album[] | []>([]);
+  const [artists, setArtists] = useState<Artist[] | []>([]);
+  const [songs, setSongs] = useState<Song[] | []>([]);
+
+  const { data, isLoading, error } = useGetSearchResultsQuery(props.query);
+
+  useEffect(() => {
+    if (!props.query) return;
+
+    const handleChange = async (query: string) => {
+      if (query === "") {
+        return;
+      }
+      if (data && !isLoading) {
+        setAlbums(data.albums.items);
+        setArtists(data.artists.items);
+        setSongs(data.tracks.items);
+      }
+    };
+
+    handleChange(props.query);
+  }, [props.query, data, isLoading]);
 
   const dispatch = useAppDispatch();
 
@@ -34,8 +54,7 @@ export default function SearchResults(props: SearchResultsProps) {
     setArtistVisible(true);
   };
 
-  const listArtists = props.artists.map((artist: any, idx: number) => (
-    //  TODO: make onClick one function!!!!
+  const listArtists = artists.map((artist: any, idx: number) => (
     <li className="searchResults-link" key={idx}>
       <Box className="searchResults-icon">
         <Person fontSize="small" />
@@ -51,7 +70,7 @@ export default function SearchResults(props: SearchResultsProps) {
       </Link>
     </li>
   ));
-  const listAlbums = props.albums.map((album: any, idx: number) => (
+  const listAlbums = albums.map((album: any, idx: number) => (
     <li className="searchResults-link" key={idx}>
       <Box className="searchResults-icon">
         <Album fontSize="small" />
@@ -67,7 +86,7 @@ export default function SearchResults(props: SearchResultsProps) {
       </Link>
     </li>
   ));
-  const listSongs = props.songs.map((song, idx) => {
+  const listSongs = songs.map((song, idx) => {
     const songObj = {
       song_details: song,
       song_audio: new Audio(song.preview_url),
@@ -92,7 +111,7 @@ export default function SearchResults(props: SearchResultsProps) {
   return (
     <Box>
       <>
-        <Fade in={!!props.query} timeout={1000}>
+        <Fade in={!!props.query || artistVisible} timeout={1000}>
           <Paper className="searchResults-box">
             <Grid
               container

@@ -7,7 +7,6 @@ const baseQuery = fetchBaseQuery({
   baseUrl: SPOTIFY_BASE_URL,
   prepareHeaders: (headers: Headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
-    console.log("api token", token);
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }
@@ -19,8 +18,7 @@ export const spotifyApi = createApi({
   baseQuery: baseQuery,
   endpoints: (builder) => ({
     getSearchResults: builder.query({
-      query: (searchQuery: string) =>
-        searchQuery ? `search?q=${searchQuery}&type=artist,album,track&limit=4` : "",
+      query: (searchQuery: string) => `search?q=${searchQuery}&type=artist,album,track&limit=4`,
     }),
     getAlbum: builder.query({
       query: (id: string) => `albums/${id}`,
@@ -32,7 +30,7 @@ export const spotifyApi = createApi({
       query: (id: string) => `artists/${id}`,
     }),
     getArtistTopSongs: builder.query({
-      query: (id: string) => `artists/${id}/top-tracks`,
+      query: (id: string) => `artists/${id}/top-tracks?market=US`,
     }),
     getArtistAlbums: builder.query({
       query: (id: string) => `artists/${id}/albums`,
@@ -40,20 +38,6 @@ export const spotifyApi = createApi({
     getSong: builder.query({
       query: (id: string) => `tracks/${id}`,
     }),
-    // getAlbumsandTopSongs: builder.query({
-    //   async queryFn(id, _queryApi, _extraOptions, fetchWithBQ) {
-    //     let songsAndAlbums: { songs: any; albums: any } = {
-    //       songs: {},
-    //       albums: {},
-    //     };
-    //     songsAndAlbums.songs = await fetchWithBQ(`artists/${id}/top-tracks`);
-    //     if (songsAndAlbums.songs.error) throw songsAndAlbums.songs.error;
-    //     songsAndAlbums.albums = await fetchWithBQ(`artists/${id}/albums`);
-    //     if (songsAndAlbums.albums.error) throw songsAndAlbums.albums.error;
-
-    //     return;
-    //   },
-    // }),
   }),
 });
 

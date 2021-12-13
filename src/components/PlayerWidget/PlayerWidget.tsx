@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Grid, Button, Drawer, Box } from "@material-ui/core";
+import { Grid, Button, Drawer, Box, Typography } from "@material-ui/core";
 import PauseCircleOutline from "@material-ui/icons/PauseCircleOutline";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutlineOutlined";
 import { styles } from "./styles";
@@ -13,13 +13,14 @@ type PlayerWidgetProps = {
 };
 
 const PlayerWidget = (props: PlayerWidgetProps) => {
-  const [showRecentlyPlayed, setShowRecentlyPlayed] = useState(false);
-  const [showQueue, setShowQueue] = useState(false);
+  // Future implementation of Queue and Recently Played
+  // const [showRecentlyPlayed, setShowRecentlyPlayed] = useState(false);
+  // const [showQueue, setShowQueue] = useState(false);
 
-  const handleShowRecentlyPlayed = () => setShowRecentlyPlayed(true);
-  const handleCloseRecentlyPlayed = () => setShowRecentlyPlayed(false);
-  const handleShowQueue = () => setShowQueue(true);
-  const handleCloseQueue = () => setShowQueue(false);
+  // const handleShowRecentlyPlayed = () => setShowRecentlyPlayed(true);
+  // const handleCloseRecentlyPlayed = () => setShowRecentlyPlayed(false);
+  // const handleShowQueue = () => setShowQueue(true);
+  // const handleCloseQueue = () => setShowQueue(false);
 
   const currentSong = useAppSelector((store) => store.musicPlayer);
 
@@ -34,8 +35,8 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
       alignItems="center"
       style={currentSong ? { display: "flex" } : { display: "none" }}
     >
-      <Grid container item xs={12} justifyContent="space-between" alignContent="center">
-        <Grid item container xs={3} alignContent="center" justifyContent="center">
+      <Grid container item xs={12} justifyContent="center" alignContent="center">
+        {/* <Grid item container xs={3} alignContent="center" justifyContent="center">
           <Button
             variant="outlined"
             color="primary"
@@ -52,7 +53,7 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
               onKeyDown={handleCloseQueue}
             ></Box>
           </Drawer>
-        </Grid>
+        </Grid> */}
         <Grid container item xs={6} justifyContent="space-evenly" alignContent="center">
           <Grid item xs={4}>
             <p>Now Playing</p>
@@ -68,7 +69,7 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
               }
             />
             <PlayCircleOutline
-              onClick={() => dispatch(playSong(currentSong.currentSong.song_audio))}
+              onClick={() => dispatch(playSong(currentSong.currentSong))}
               style={
                 currentSong.isPlaying === false
                   ? { fontSize: 40, margin: "5px 0" }
@@ -78,10 +79,14 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
           </Grid>
 
           <Grid item className="scroll-left" xs={4}>
-            <p>{currentSong ? currentSong.currentSong.song_details.name : null}</p>
+            <Typography variant="body1" component="p">
+              {currentSong.currentSong.song_details.name
+                ? currentSong.currentSong.song_details.name
+                : "Select a song to play"}
+            </Typography>
           </Grid>
         </Grid>
-        <Grid item container xs={3} alignContent="center" justifyContent="center">
+        {/* <Grid item container xs={3} alignContent="center" justifyContent="center">
           <Button
             variant="outlined"
             color="primary"
@@ -98,7 +103,7 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
               onKeyDown={handleCloseRecentlyPlayed}
             ></Box>
           </Drawer>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Grid>
   );

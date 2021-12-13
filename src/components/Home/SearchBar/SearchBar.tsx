@@ -3,9 +3,9 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import Search from "@material-ui/icons/Search";
 import SearchResults from "./SearchResults/SearchResults";
+import { useFormik } from "formik";
 import styles from "./styles";
-import { useState, useEffect } from "react";
-import { useGetSearchResultsQuery } from "../../../features/now-playing/now-playing-api";
+import { useState } from "react";
 
 /*
 On load the Searchbar component uses the getSearchResults API function, user query,
@@ -14,34 +14,21 @@ On load the Searchbar component uses the getSearchResults API function, user que
  as the query changes.
 
 */
+interface FormValues {
+  query: string;
+}
+
 export default function SearchBar() {
-  const classes = styles();
-
   const [query, setQuery] = useState("");
-  const [albums, setAlbums] = useState([]);
-  const [artists, setArtists] = useState([]);
-  const [songs, setSongs] = useState([]);
 
-  const { data, isLoading, error } = useGetSearchResultsQuery(query, {
-    skip: !!query,
+  const initialValues: FormValues = { query: "" };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    onSubmit: () => {},
   });
 
-  useEffect(() => {
-    if (!query) return;
-
-    const handleChange = async (query: string) => {
-      if (query === "") {
-        return;
-      }
-      if (!isLoading) {
-        setAlbums(data.albums.items);
-        setArtists(data.artists.items);
-        setSongs(data.tracks.items);
-      }
-    };
-
-    handleChange(query);
-  }, [query, data, isLoading]);
+  const classes = styles();
 
   return (
     <>
@@ -50,6 +37,7 @@ export default function SearchBar() {
           id="searchbar"
           label="What would you like to hear?"
           variant="outlined"
+          name="query"
           className={classes.root}
           onChange={(e) => setQuery(e.target.value)}
           InputProps={{
@@ -62,13 +50,7 @@ export default function SearchBar() {
         />
       </FormControl>
 
-      {isLoading ? (
-        <h1>Loading...</h1>
-      ) : error ? (
-        <h1>There was a problem</h1>
-      ) : (
-        <SearchResults artists={artists} albums={albums} songs={songs} query={query} />
-      )}
+      {query || formik.touched.query ? <SearchResults query={query} /> : null}
     </>
   );
 }

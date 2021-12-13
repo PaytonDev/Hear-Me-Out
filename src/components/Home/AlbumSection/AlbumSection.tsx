@@ -41,11 +41,11 @@ const AlbumSection = (props: AlbumSectionProps) => {
 
   useEffect(() => {
     async function getCurrentAlbumSongs() {
-      if (!currentAlbum.id) return;
+      if (!currentAlbum.id || isLoading) return;
       setAlbumSongs(data.items);
     }
     getCurrentAlbumSongs();
-  }, [currentAlbum, data]);
+  }, [currentAlbum, data, isLoading]);
 
   const goToArtist = (artist: Artist) => {
     if (currentAlbum) {
@@ -65,7 +65,7 @@ const AlbumSection = (props: AlbumSectionProps) => {
   return (
     <Paper className={classes.albumSectionContainer}>
       {isLoading ? null : (
-        <Fade in={!!currentAlbum.artists} timeout={1000}>
+        <Fade in={!!albumSongs} timeout={1000}>
           <Grid container>
             <Grid
               container
@@ -104,64 +104,77 @@ const AlbumSection = (props: AlbumSectionProps) => {
                 <TableHead>
                   <TableRow>
                     <TableCell align="left">
-                      <Typography variant="body1" component="header">
-                        Song
-                      </Typography>
+                      <Box>
+                        <Typography variant="body1" component="header">
+                          Song
+                        </Typography>
+                      </Box>
                     </TableCell>
                     <TableCell align="left">
-                      <Typography variant="body1" component="header">
-                        Artist
-                      </Typography>
+                      <Box>
+                        <Typography variant="body1" component="header">
+                          Artist
+                        </Typography>
+                      </Box>
                     </TableCell>
                     <TableCell align="left">
-                      <Typography variant="body1" component="header">
-                        Time
-                      </Typography>
+                      <Box>
+                        <Typography variant="body1" component="header">
+                          Time
+                        </Typography>
+                      </Box>
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {currentAlbum.id
-                    ? albumSongs.map((song: any, idx: number) => (
-                        <TableRow key={idx}>
-                          <TableCell className={classes.songTableCell}>
-                            <Grid container alignContent="center">
-                              <img
-                                className={classes.songImageStyles}
-                                src={currentAlbum.id ? currentAlbum.images[2].url : ""}
-                                alt={`${currentAlbum.id ? currentAlbum.name : ""} album cover`}
-                              />
+                    ? albumSongs.map((song: any, idx: number) => {
+                        const songObj = {
+                          song_details: song,
+                          song_audio: new Audio(song.preview_url),
+                        };
 
-                              {/* Song Link */}
-                              <Grid
-                                container
-                                item
-                                alignContent="center"
-                                onClick={() => {
-                                  dispatch(playSong(song.id));
-                                }}
-                                className={classes.songNameStyles}
-                              >
-                                <Link>{song.name}</Link>
+                        return (
+                          <TableRow key={idx}>
+                            <TableCell className={classes.songTableCell}>
+                              <Grid container alignContent="center">
+                                <img
+                                  className={classes.songImageStyles}
+                                  src={currentAlbum.id ? currentAlbum.images[2].url : ""}
+                                  alt={`${currentAlbum.id ? currentAlbum.name : ""} album cover`}
+                                />
+
+                                {/* Song Link */}
+                                <Grid
+                                  container
+                                  item
+                                  alignContent="center"
+                                  onClick={() => {
+                                    dispatch(playSong(songObj));
+                                  }}
+                                  className={classes.songNameStyles}
+                                >
+                                  <Link>{song.name}</Link>
+                                </Grid>
                               </Grid>
-                            </Grid>
-                          </TableCell>
-                          <TableCell>
-                            {/* Artist Link */}
-                            <Link
-                              onClick={() => goToArtist(currentArtist)}
-                              className={classes.songInfoStyles}
-                            >
-                              {song.artists[0].name}
-                            </Link>
-                          </TableCell>
-                          <TableCell>
-                            <small className={classes.songInfoStyles}>
-                              {convertSongTime(song.duration_ms)}
-                            </small>
-                          </TableCell>
-                        </TableRow>
-                      ))
+                            </TableCell>
+                            <TableCell>
+                              {/* Artist Link */}
+                              <Link
+                                onClick={() => goToArtist(currentArtist)}
+                                className={classes.songInfoStyles}
+                              >
+                                {song.artists[0].name}
+                              </Link>
+                            </TableCell>
+                            <TableCell>
+                              <small className={classes.songInfoStyles}>
+                                {convertSongTime(song.duration_ms)}
+                              </small>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })
                     : "Album Songs"}
                 </TableBody>
               </Table>
