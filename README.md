@@ -7,13 +7,9 @@ The app can be accessed [here](https://hear-me-out-spotify-api.herokuapp.com/).
 
 This app uses Spotify's OAuth for login. Simply click the login button on the homepage where you'll be redirected to Spotify to login and then redirected back to the app.
 
-![Hear Me Out Login Gif](https://github.com/PaytonDev/Hear-Me-Out/blob/master/HearMeOutLogin.gif)
-
-## Useage
+## Usage
 
 After logging in, then you will be able to use the searchbar to search for an artist, album, or song. If you select an artist, all of their available albums and top 5 songs will be shown to you. If you select an album it will display the album's tracklist. When you click on a song title the app will play the 30 second preview of the song if it is available. After clicking on the song to play you can pause and play the sample using the player widget that appears at the bottom of the screen.
-
-![Hear Me Out Search Gif](https://github.com/PaytonDev/Hear-Me-Out/blob/master/HearMeOutSearch.gif)
 
 ## The Technical Stuff
 
