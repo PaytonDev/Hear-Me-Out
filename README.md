@@ -1,34 +1,31 @@
-# Hear Me Out / Spotify Web API Project
+# Hear Me Out
 
-Hello Twitch Team,
+"Hear Me Out" is a minimal, dark theme music player made with React, Typescript, Express.js, and Axios that lets you search and play sample songs using Spotify's Web API.
+The app can be accessed [here](https://hear-me-out-spotify-api.herokuapp.com/).
 
-I set out to build "Hear Me Out" is a minimal, dark theme music player made with React and Express.js that lets you search and play sample songs using Spotify's Web API.
+## Login
 
-## A Warning
+This app uses Spotify's OAuth for login. Simply click the login button on the homepage where you'll be redirected to Spotify to login and then redirected back to the app.
 
-This app is unfinished, a bit DRY, not deployed, and currently being written by someone with 4 hours of sleep in the last 48 hours. I had an all-night battle with Heroku and lost. My app will not work locally or deployed so I do not have screenshots and due to that, I will simply go over the requirements I did meet and address the issues in the interview.
+![Hear Me Out Login Gif](https://github.com/PaytonDev/Hear-Me-Out/blob/master/HearMeOutLogin.gif)
 
-Thank you so much for the opportunity and I am excited to explain this process to the team.
+## Useage
 
-## The Requirements
+After logging in, then you will be able to use the searchbar to search for an artist, album, or song. If you select an artist, all of their available albums and top 5 songs will be shown to you. If you select an album it will display the album's tracklist. When you click on a song title the app will play the 30 second preview of the song if it is available. After clicking on the song to play you can pause and play the sample using the player widget that appears at the bottom of the screen.
 
-You gave 6 of them. Let's see how I did:
+![Hear Me Out Search Gif](https://github.com/PaytonDev/Hear-Me-Out/blob/master/HearMeOutSearch.gif)
 
-1) Does this app use a modern JS Library/Framework?
-   - Yes. 2 to be exact. React & Express.js Also, a mean language named TypeScript.
+## The Technical Stuff
 
-2) Create Create an application that can be interacted with, in a minimum of three different ways by the user.
-   - Play/Pause. Search. Login. "See all albums" toggle.
+When making a call to the Search, Album, Artist, or Song endpoint all of the data available through the Spotify Web API is available in the returned response. This was to ensure that additional UI features would be less difficult to implement because all necessary data would be available in the current props.
 
-3) Integration with a 3rd Party RESTful API.
-   - OAuth and music retrieval via Spotify Web API
+An example of what is available in the Artist endpoint:  
+![Artist Endpoint response object photo](https://github.com/PaytonDev/Hear-Me-Out/blob/master/Payload.png)
 
-4) Usage Of at least 5 UI components from the @material-UI/core library.
+## Roadmap
 
-    - Box, Grid, Button, TextField, Icon (Play/Pause toggle)
+The next features to be added are:
 
-5) Usage of the architectural pattern.
-   - MVC was my chosen pattern. I kept my controller components and my views components separated.
-
-6) An example of a reusable UI component.
-   - I did not reach this goal. I designed the button but never implemented it.
+- Previous/next song functionality
+- Creating, adding to, and removing from song queues
+- "Recently played" sidebar
