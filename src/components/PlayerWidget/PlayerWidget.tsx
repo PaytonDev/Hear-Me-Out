@@ -13,14 +13,13 @@ type PlayerWidgetProps = {
 };
 
 const PlayerWidget = (props: PlayerWidgetProps) => {
-  // Future implementation of Queue and Recently Played
-  // const [showRecentlyPlayed, setShowRecentlyPlayed] = useState(false);
-  // const [showQueue, setShowQueue] = useState(false);
+  const [showRecentlyPlayed, setShowRecentlyPlayed] = useState(false);
+  const [showQueue, setShowQueue] = useState(false);
 
-  // const handleShowRecentlyPlayed = () => setShowRecentlyPlayed(true);
-  // const handleCloseRecentlyPlayed = () => setShowRecentlyPlayed(false);
-  // const handleShowQueue = () => setShowQueue(true);
-  // const handleCloseQueue = () => setShowQueue(false);
+  const handleShowRecentlyPlayed = () => setShowRecentlyPlayed(true);
+  const handleCloseRecentlyPlayed = () => setShowRecentlyPlayed(false);
+  const handleShowQueue = () => setShowQueue(true);
+  const handleCloseQueue = () => setShowQueue(false);
 
   const currentSong = useAppSelector((store) => store.musicPlayer);
 
@@ -36,7 +35,7 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
       style={currentSong ? { display: "flex" } : { display: "none" }}
     >
       <Grid container item xs={12} justifyContent="center" alignContent="center">
-        {/* <Grid item container xs={3} alignContent="center" justifyContent="center">
+        <Grid item container xs={3} alignContent="center" justifyContent="center">
           <Button
             variant="outlined"
             color="primary"
@@ -53,7 +52,7 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
               onKeyDown={handleCloseQueue}
             ></Box>
           </Drawer>
-        </Grid> */}
+        </Grid>
         <Grid container item xs={6} justifyContent="space-evenly" alignContent="center">
           <Grid item xs={4}>
             <p>Now Playing</p>
@@ -86,7 +85,7 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
             </Typography>
           </Grid>
         </Grid>
-        {/* <Grid item container xs={3} alignContent="center" justifyContent="center">
+        <Grid item container xs={3} alignContent="center" justifyContent="center">
           <Button
             variant="outlined"
             color="primary"
@@ -103,7 +102,7 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
               onKeyDown={handleCloseRecentlyPlayed}
             ></Box>
           </Drawer>
-        </Grid> */}
+        </Grid>
       </Grid>
     </Grid>
   );
