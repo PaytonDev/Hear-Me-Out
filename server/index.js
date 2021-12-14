@@ -23,8 +23,6 @@ app.use(express.static(path.join(__dirname, "..", "build")));
 
 app.get("/", (req, res) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
-app.get("/home", (req, res) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
-
 app.post("/login", function (req, res) {
   let code = req.body.code;
 
@@ -49,9 +47,9 @@ app.post("/refresh", (req, res) => {
   let refreshToken = req.body.refreshToken;
 
   let spotifyApi = new spotifyWebApi({
-    clientId: credentials.clientID,
+    clientId: credentials.clientId,
     clientSecret: credentials.clientSecret,
-    redirectUri: credentials.redirectURI,
+    redirectUri: credentials.redirectUri,
     refreshToken,
   });
   spotifyApi
