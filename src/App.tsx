@@ -5,7 +5,7 @@ import LoginPage from "./components/Login/LoginPage";
 import { ThemeProvider } from "@material-ui/styles";
 import { CssBaseline } from "@material-ui/core";
 import useAuth from "./controller/useAuth";
-import { useAppDispatch, useAppSelector } from "./state/hooks";
+import { useAppDispatch } from "./state/hooks";
 import { setToken } from "./features/auth/auth-slice";
 import { theme } from "./theme";
 
