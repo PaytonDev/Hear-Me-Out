@@ -24,7 +24,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">{storeToken ? <Home token={token} /> : <LoginPage />}</div>
+      <div className="App">{code || storeToken ? <Home token={token} /> : <LoginPage />}</div>
     </ThemeProvider>
   );
 }
