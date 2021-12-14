@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 4000;
 const credentials = {
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  redirectUri: "https://hear-me-out-spotify-api.herokuapp.com/",
+  redirectUri: "https://hear-me-out-43d23.web.app",
   scopes: "streaming user-read-email user-read-private",
 };
 
