@@ -1,4 +1,4 @@
-import { loginURL } from "../../controller/spotify";
+import { login } from "../../controller/spotify";
 import { Grid, Button, Box, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import styles from "./styles";
@@ -12,7 +12,7 @@ const LoginPage = () => {
         A 30 second music player <br />
         powered by <span className={classes.spotifyColor}>Spotify</span>
       </Typography>
-      <Button href={loginURL} className={classes.loginBtn}>
+      <Button href={login} className={classes.loginBtn}>
         Login
       </Button>
     </Grid>
