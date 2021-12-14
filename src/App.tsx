@@ -14,7 +14,7 @@ export const code = new URLSearchParams(window.location.search).get("code");
 function App() {
   const token = useAuth(code);
   const dispatch = useAppDispatch();
-  const storeToken = useAppSelector((store) => store.auth.token);
+  // const storeToken = useAppSelector((store) => store.auth.token);
 
   useEffect(() => {
     if (!token) return;
@@ -24,7 +24,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">{storeToken ? <Home token={token} /> : <LoginPage />}</div>
+      <div className="App">{token ? <Home token={token} /> : <LoginPage />}</div>
     </ThemeProvider>
   );
 }
