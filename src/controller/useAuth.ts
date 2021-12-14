@@ -13,7 +13,7 @@ const useAuth = () => {
   useEffect(() => {
     if (!code) return;
 
-    axios.post("https://hear-me-out.netlify.app/login", { code })
+    axios.post("https://localhost:4000", { code })
       .then((res) => {
         window.history.pushState({}, "", "/");
         setAccessToken(res.data.token);
