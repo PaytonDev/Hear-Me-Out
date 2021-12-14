@@ -23,7 +23,7 @@ export default function SearchResults(props: SearchResultsProps) {
   const [artists, setArtists] = useState<Artist[] | []>([]);
   const [songs, setSongs] = useState<Song[] | []>([]);
 
-  const { data, isLoading, error } = useGetSearchResultsQuery(props.query);
+  const { data, isLoading } = useGetSearchResultsQuery(props.query);
 
   useEffect(() => {
     if (!props.query) return;

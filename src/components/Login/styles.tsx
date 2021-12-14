@@ -1,4 +1,3 @@
-import { Palette } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 
 const styles = makeStyles({

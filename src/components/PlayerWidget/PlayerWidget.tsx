@@ -1,8 +1,6 @@
-import { useState } from "react";
-import { Grid, Button, Drawer, Box, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import PauseCircleOutline from "@material-ui/icons/PauseCircleOutline";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutlineOutlined";
-import { styles } from "./styles";
 import "./PlayerWidget.css";
 import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { pauseSong, playSong } from "../../features/now-playing/now-playing-slice";
@@ -16,8 +14,6 @@ const PlayerWidget = (props: PlayerWidgetProps) => {
   const currentSong = useAppSelector((store) => store.musicPlayer);
 
   const dispatch = useAppDispatch();
-
-  const classes = styles();
 
   return (
     <Grid
