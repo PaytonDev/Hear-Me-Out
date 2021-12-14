@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+
 // Function used to return Access Token needed to make all other API Calls.
 
-const useAuth = () => {
+const useAuth = (code: string | null) => {
   const [accessToken, setAccessToken] = useState<string>();
   const [refreshToken] = useState<string>();
   const [expiresIn, setExpiresIn] = useState<number>();
-
-  const code = new URLSearchParams(window.location.search).get("code");
 
   useEffect(() => {
     if (!code) return;

@@ -12,7 +12,7 @@ import { theme } from "./theme";
 export const code = new URLSearchParams(window.location.search).get("code");
 
 function App() {
-  const token = useAuth();
+  const token = useAuth(code);
   const dispatch = useAppDispatch();
   const storeToken = useAppSelector((store) => store.auth.token);
 
@@ -24,7 +24,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">{code || storeToken ? <Home token={token} /> : <LoginPage />}</div>
+      <div className="App">{storeToken ? <Home token={token} /> : <LoginPage />}</div>
     </ThemeProvider>
   );
 }
