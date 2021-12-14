@@ -3,8 +3,9 @@ import axios from "axios";
 
 
 // Function used to return Access Token needed to make all other API Calls.
+export const code = new URLSearchParams(window.location.search).get("code");
 
-const useAuth = (code: string | null) => {
+const useAuth = () => {
   const [accessToken, setAccessToken] = useState<string>();
   const [refreshToken] = useState<string>();
   const [expiresIn, setExpiresIn] = useState<number>();
@@ -12,7 +13,7 @@ const useAuth = (code: string | null) => {
   useEffect(() => {
     if (!code) return;
 
-    axios.post("/login", { code })
+    axios.post("https://hear-me-out.netlify.app/login", { code })
       .then((res) => {
         window.history.pushState({}, "", "/");
         setAccessToken(res.data.token);
@@ -20,7 +21,7 @@ const useAuth = (code: string | null) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [code]);
+  }, []);
 
   useEffect(() => {
     if (!refreshToken || !expiresIn) return;

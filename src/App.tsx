@@ -9,10 +9,8 @@ import { useAppDispatch } from "./state/hooks";
 import { setToken } from "./features/auth/auth-slice";
 import { theme } from "./theme";
 
-export const code = new URLSearchParams(window.location.search).get("code");
-
 function App() {
-  const token = useAuth(code);
+  const token = useAuth();
   const dispatch = useAppDispatch();
   // const storeToken = useAppSelector((store) => store.auth.token);
 
