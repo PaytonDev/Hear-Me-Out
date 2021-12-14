@@ -23,16 +23,7 @@ app.use(express.static(path.join(__dirname, "..", "build")));
 
 app.get("/", (req, res) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
-app.get("/login", function (req, res) {
- 
-  res.redirect(
-    `https://accounts.spotify.com/authorize?response_type=code&client_id=${encodeURIComponent(
-      credentials.clientId
-    )}&redirect_uri=${encodeURIComponent(credentials.redirectUri)}&scope=${encodeURIComponent(
-      credentials.scopes
-    )}`
-  );
-});
+app.get("/home", (req, res) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
 app.post("/login", function (req, res) {
   let code = req.body.code;
