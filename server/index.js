@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 4000;
 const credentials = {
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  redirectUri: "https://hear-me-out.netlify.app/home",
+  redirectUri: "https://hear-me-out.netlify.app/",
   scopes: "streaming user-read-email user-read-private",
 };
 
