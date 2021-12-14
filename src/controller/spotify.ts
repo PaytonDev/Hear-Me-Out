@@ -1,1 +1,1 @@
-export const loginURL = "http://localhost:4000/login";
+export const loginURL = "/login";

@@ -13,7 +13,7 @@ const useAuth = () => {
   useEffect(() => {
     if (!code) return;
 
-    axios.post("http://localhost:4000/login", { code })
+    axios.post("/login", { code })
       .then((res) => {
         window.history.pushState({}, "", "/");
         setAccessToken(res.data.token);
