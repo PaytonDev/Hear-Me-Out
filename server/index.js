@@ -10,9 +10,9 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 const credentials = {
-  clientId: process.env.Client_ID,
+  clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  redirectUri: "https://hear-me-out-spotify-api.herokuapp.com/",
+  redirectUri: "https://hear-me-out.netlify.app/",
   scopes: "streaming user-read-email user-read-private",
 };
 
