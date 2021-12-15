@@ -140,12 +140,8 @@ export default function SearchResults(props: SearchResultsProps) {
             </Grid>
           </Paper>
         </Fade>
-        <Box style={albumVisible ? { display: "block" } : { display: "none" }}>
-          <AlbumSection handleShowArtist={makeArtistVisible} />
-        </Box>
-        <Box style={artistVisible ? { display: "block" } : { display: "none" }}>
-          <ArtistSection handleShowAlbum={makeAlbumVisible} />
-        </Box>
+        {albumVisible ? <AlbumSection handleShowArtist={makeArtistVisible} /> : null}
+        {artistVisible ? <ArtistSection handleShowAlbum={makeAlbumVisible} /> : null}
       </>
     </Box>
   );

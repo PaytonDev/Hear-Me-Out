@@ -13,7 +13,6 @@ function App() {
   const token = useAuth();
   const dispatch = useAppDispatch();
   // const storeToken = useAppSelector((store) => store.auth.token);
-
   useEffect(() => {
     if (!token) return;
     dispatch(setToken(token));

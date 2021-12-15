@@ -13,14 +13,28 @@ const useAuth = () => {
   useEffect(() => {
     if (!code) return;
 
-    axios.post("https://localhost:4000", { code })
-      .then((res) => {
-        window.history.pushState({}, "", "/");
-        setAccessToken(res.data.token);
+    try {
+      fetch('/api/get-token', {
+        method: 'POST',
+        body: JSON.stringify({ code }),
+      }).then((res: any) => (
+        res.json()
+      )).then(function(data: any) {
+        window.history.pushState({}, '', '/');
+        setAccessToken(data.data.body.access_token);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    } catch (error) {
+      console.log(error)
+    }
+
+    // axios.post("/login", { code })
+    //   .then((res) => {
+    //     window.history.pushState({}, "", "/");
+    //     setAccessToken(res.data.token);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }, []);
 
   useEffect(() => {
